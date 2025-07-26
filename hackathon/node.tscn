@@ -1,19 +1,24 @@
 [gd_scene load_steps=6 format=4 uid="uid://ceh4vf0c5qm1m"]
 
-[ext_resource type="Texture2D" uid="uid://3iv3m6r45gon" path="res://assets/Blue.png" id="1_o4ndh"]
-[ext_resource type="Texture2D" uid="uid://bsrn8cbwd0ajq" path="res://assets/Terrain (16x16).png" id="2_v4gg7"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_3j4ra"]
+[ext_resource type="PackedScene" uid="uid://cb8wfte4jv2et" path="res://Scenes/player.tscn" id="1_112p8"]
+[ext_resource type="Texture2D" uid="uid://3iv3m6r45gon" path="res://assets/Tile set/Blue.png" id="1_o4ndh"]
+[ext_resource type="Texture2D" uid="uid://bsrn8cbwd0ajq" path="res://assets/Tile set/Terrain (16x16).png" id="2_v4gg7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rhxpi"]
 texture = ExtResource("2_v4gg7")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, -0.796577, -16, -0.159317, 0.63726, -16, -0.31863)
 1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 0.159313, -16, -0.159317, 16, -16, 16)
 3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 6:0/0 = 0
+6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 7:0/0 = 0
 8:0/0 = 0
 9:0/0 = 0
@@ -26,7 +31,9 @@ texture_region_size = Vector2i(32, 32)
 18:0/0 = 0
 19:0/0 = 0
 0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, -0.31863, -16, -0.31863)
 1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, -0.31863, -16, -0.31863)
 2:1/0 = 0
 3:1/0 = 0
 4:1/0 = 0
@@ -43,7 +50,9 @@ texture_region_size = Vector2i(32, 32)
 18:1/0 = 0
 19:1/0 = 0
 0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 2:2/0 = 0
 6:2/0 = 0
 7:2/0 = 0
@@ -55,11 +64,15 @@ texture_region_size = Vector2i(32, 32)
 18:2/0 = 0
 19:2/0 = 0
 0:4/0 = 0
+0:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 1:4/0 = 0
+1:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 2:4/0 = 0
 3:4/0 = 0
+3:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 4:4/0 = 0
 6:4/0 = 0
+6:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 7:4/0 = 0
 8:4/0 = 0
 9:4/0 = 0
@@ -172,16 +185,16 @@ texture_region_size = Vector2i(32, 32)
 
 [sub_resource type="TileSet" id="TileSet_be11j"]
 tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 2
 sources/0 = SubResource("TileSetAtlasSource_rhxpi")
 
 [node name="Node2D" type="Node2D"]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="player" parent="." instance=ExtResource("1_112p8")]
+position = Vector2(33, -45)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-shape = SubResource("CircleShape2D_3j4ra")
-
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+[node name="Camera2D" type="Camera2D" parent="player"]
+zoom = Vector2(3.38, 3.38)
 
 [node name="TextureRect" type="TextureRect" parent="."]
 texture_filter = 1
