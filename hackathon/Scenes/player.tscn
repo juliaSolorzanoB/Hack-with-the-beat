@@ -51,7 +51,7 @@ script = ExtResource("1_cvnsp")
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_8erm5")
 autoplay = "default"
-frame_progress = 0.527389
+frame_progress = 0.581997
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 4.5)
