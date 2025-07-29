@@ -5,3 +5,5 @@ res://scenes/player.tscn
 res://scenes/tile.tscn
 res://scenes/killzone.tscn
 res://scenes/color_manager.tscn
+res://scripts/player.gd
+res://scripts/color_manager.gd
