@@ -1,9 +1,9 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1753758728
-::res://assets/::1753721124
+::res://::1753758833
+::res://assets/::1753758732
 sprite1.png::CompressedTexture2D/CompressedTexture2D::8013487199932183616::1753721124::1753758732::1::::<><><>0<>0<>440c4064a35a62aab534e3722a29277d<>res://.godot/imported/sprite1.png-7e469a4e8fed8addaf4d580650c98adb.ctex::
 ::res://assets/Fonts/::1753502301
-::res://assets/parallax/::1753721124
+::res://assets/parallax/::1753758732
 parallax1.png::CompressedTexture2D/CompressedTexture2D::6516844016072093488::1753721124::1753758732::1::::<><><>0<>0<>acbd61e6ed78c9aa3eb0f8d6c8d32052<>res://.godot/imported/parallax1.png-7c03e536498b16b793af05891623eb4a.ctex::
 parallax2_2.png::CompressedTexture2D/CompressedTexture2D::2505022651475538685::1753721124::1753758732::1::::<><><>0<>0<>23f3f08b5bc939e4c0750fa1ffd4afc5<>res://.godot/imported/parallax2_2.png-c8888c9b497dbe03f780854bc41ce86b.ctex::
 parallax3_2.png::CompressedTexture2D/CompressedTexture2D::8071838275277410042::1753721124::1753758732::1::::<><><>0<>0<>8950c7748ab8a29b883e53ebd8a20657<>res://.godot/imported/parallax3_2.png-ade2ead358efb45c625958e742056e9a.ctex::
@@ -23,3 +23,8 @@ player.gd::GDScript::7609191290454769320::1753721124::0::1::::<>CharacterBody2D<
 tile.gd::GDScript::2491185199909953443::1753721124::0::1::::<>StaticBody2D<><>0<>0<><>::
 ::res://shader/::1753721124
 grayscale_color.gdshader::Shader::1374132803312443057::1753721124::0::1::::<><><>0<>0<><>::
+::res://songs/::1753758881
+DJ Snake - Magenta Riddim.mp3::AudioStreamMP3::8343537811644682417::1753758865::1753758865::1::::<><><>0<>0<>9fb7331f5c0000f3e8f9a84d48aaafa6<>res://.godot/imported/DJ Snake - Magenta Riddim.mp3-fe1d45b8adf19a1d393ae173f2339dbd.mp3str::
+DJ Snake - Magenta Riddim.ogg::AudioStreamOggVorbis::6012928045462900306::1753758881::1753758881::1::::<><><>0<>0<>52219b7dcb0b6dc44cb02a38981c1ea1<>res://.godot/imported/DJ Snake - Magenta Riddim.ogg-6acfb702368133035ee2b5341d68c2d9.oggvorbisstr::
+::res://song_data/::1753758853
+riddim.json::JSON::-1::1753758853::0::1::::<><><>0<>0<><>::
