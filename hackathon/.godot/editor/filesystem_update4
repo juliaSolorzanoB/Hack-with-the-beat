@@ -1,0 +1,7 @@
+res://scenes/game.tscn
+res://shader/grayscale_color.gdshader
+res://scripts/game_manager.gd
+res://scenes/player.tscn
+res://scenes/tile.tscn
+res://scenes/killzone.tscn
+res://scenes/color_manager.tscn
