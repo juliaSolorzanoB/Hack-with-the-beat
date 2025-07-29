@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://vt3g0hwshlpa"]
+[gd_scene load_steps=14 format=4 uid="uid://vt3g0hwshlpa"]
 
 [ext_resource type="Script" uid="uid://bquewee1q4iiu" path="res://scripts/game_manager.gd" id="1_dinhu"]
 [ext_resource type="Texture2D" uid="uid://cy32p67ts617q" path="res://assets/parallax/parallax1.png" id="1_p57ef"]
@@ -10,7 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://dmf170xndj01q" path="res://assets/sprite1.png" id="6_kvpfn"]
 [ext_resource type="PackedScene" uid="uid://d1aegeddeklo" path="res://scenes/player.tscn" id="6_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://c4kmdmcriltof" path="res://scenes/color_manager.tscn" id="6_vtaks"]
-[ext_resource type="PackedScene" uid="uid://bifyen0bdqyv8" path="res://scenes/killzone.tscn" id="8_gee14"]
 [ext_resource type="PackedScene" uid="uid://ba6a8jf5la74v" path="res://scenes/tile.tscn" id="9_0tnpc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dinhu"]
@@ -174,11 +173,6 @@ texture = ExtResource("6_kvpfn")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_dinhu")
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gee14"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vtaks"]
-size = Vector2(334, 1)
-
 [node name="Game" type="Node2D"]
 
 [node name="Game_manager" type="Node" parent="."]
@@ -251,27 +245,8 @@ limit_top = 10
 limit_bottom = 190
 limit_smoothed = true
 
-[node name="ColorManager" parent="." instance=ExtResource("6_vtaks")]
+[node name="ColorManager" parent="." groups=["color_manager"] instance=ExtResource("6_vtaks")]
 max_bleed_radius = 100.0
-
-[node name="KillZone" type="Node" parent="."]
-
-[node name="Outer Kzone" parent="KillZone" instance=ExtResource("8_gee14")]
-visible = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone/Outer Kzone"]
-visible = false
-position = Vector2(161, 238)
-shape = SubResource("WorldBoundaryShape2D_gee14")
-
-[node name="Floor Kzone" parent="KillZone" instance=ExtResource("8_gee14")]
-visible = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone/Floor Kzone"]
-visible = false
-position = Vector2(440, 207.5)
-shape = SubResource("RectangleShape2D_vtaks")
-debug_color = Color(0.844925, 0.159846, 0.833487, 0.42)
 
 [node name="tiles" type="Node" parent="."]
 
