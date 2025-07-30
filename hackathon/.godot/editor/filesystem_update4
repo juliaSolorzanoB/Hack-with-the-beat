@@ -1,13 +1,10 @@
-res://shader/grayscale_color.gdshader
 res://scenes/game.tscn
+res://shader/grayscale_color.gdshader
 res://scenes/player.tscn
 res://scenes/tile.tscn
 res://scenes/killzone.tscn
 res://scenes/color_manager.tscn
 res://scenes/Bee.tscn
 res://scenes/boar.tscn
-res://scripts/player.gd
 res://scenes/platform.tscn
-res://scripts/color_manager.gd
-res://scripts/node.gd
 res://scenes/node.tscn
