@@ -1,29 +1,59 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1753763533
-::res://assets/::1753758732
+::res://::1753844646
+::res://assets/::1753844750
 sprite1.png::CompressedTexture2D/CompressedTexture2D::8013487199932183616::1753721124::1753758732::1::::<><><>0<>0<>440c4064a35a62aab534e3722a29277d<>res://.godot/imported/sprite1.png-7e469a4e8fed8addaf4d580650c98adb.ctex::
 ::res://assets/Fonts/::1753502301
+::res://assets/Mob/::1753844750
+::res://assets/Mob/Boar/::1753844750
+::res://assets/Mob/Boar/Hit-Vanish/::1753844750
+Hit-Sheet-Black.png::CompressedTexture2D::4776136207452784915::1753844750::1753844751::1::::<><><>0<>0<>6bcfcb90c3cfefa9ad914431a9f7fe3d<>res://.godot/imported/Hit-Sheet-Black.png-ced5ddd5cc5cf501a93009bca91617e9.ctex::
+Hit-Sheet-White.png::CompressedTexture2D::7115815860616803878::1753844750::1753844751::1::::<><><>0<>0<>536ac0ebbebf5facdb929db8054a7e15<>res://.godot/imported/Hit-Sheet-White.png-b3ef58743c1f37bc22d57585a3fc9c9c.ctex::
+Hit-Sheet.png::CompressedTexture2D::8159362519892811358::1753844750::1753844751::1::::<><><>0<>0<>2dfc95650c10108ff86a9e1ff6bac025<>res://.godot/imported/Hit-Sheet.png-fb7e5c8aaacd0baa50a5eee7e0a8d33a.ctex::
+::res://assets/Mob/Boar/Idle/::1753844750
+Idle-Sheet-export-Back.png::CompressedTexture2D::989969455329708885::1753844750::1753844751::1::::<><><>0<>0<>7c77db0a480774f25c31ddf31eba429a<>res://.godot/imported/Idle-Sheet-export-Back.png-6cb92b3459393716f6bf79c00dc57397.ctex::
+Idle-Sheet-White.png::CompressedTexture2D::8244455158590318785::1753844750::1753844751::1::::<><><>0<>0<>d1dd0164e10850563139fe07b9e935c5<>res://.godot/imported/Idle-Sheet-White.png-fc09747dbbdde44569c3dfa07f1c6f36.ctex::
+Idle-Sheet.png::CompressedTexture2D::7360514971845048682::1753844750::1753844751::1::::<><><>0<>0<>c6318c9c194dabe6e7eb7efb5cf97715<>res://.godot/imported/Idle-Sheet.png-14ea3c68cedf799687f8c5da5194a061.ctex::
+::res://assets/Mob/Boar/Run/::1753844750
+Run-Sheet-Black.png::CompressedTexture2D::5636801000479988165::1753844750::1753844751::1::::<><><>0<>0<>3a2cf7b15e9f25c1e9ae3dd1331d520a<>res://.godot/imported/Run-Sheet-Black.png-b9f7be0a03be27f505bb7fbdf832b123.ctex::
+Run-Sheet-White.png::CompressedTexture2D::1120607748047884096::1753844750::1753844751::1::::<><><>0<>0<>0786e14d3341297f966c62517bd6697f<>res://.godot/imported/Run-Sheet-White.png-994f83a9071a7bb716633dd88a1b0ba1.ctex::
+Run-Sheet.png::CompressedTexture2D::129763004345350669::1753844750::1753844751::1::::<><><>0<>0<>153698d68bc705ab2e1be54e041c7e3e<>res://.godot/imported/Run-Sheet.png-f0b29358fb26ee879c2bf5fde0f4bf39.ctex::
+::res://assets/Mob/Boar/Walk/::1753844750
+Walk-Base-Sheet-White.png::CompressedTexture2D::3398967441602326821::1753844750::1753844751::1::::<><><>0<>0<>4a9dffba3bb0ce7779e8e51bd36c35b4<>res://.godot/imported/Walk-Base-Sheet-White.png-1e2e87aa28fad6880726f3e1fb6f2842.ctex::
+Walk-Base-Sheet.png::CompressedTexture2D::6123029153936452779::1753844750::1753844751::1::::<><><>0<>0<>26d177479227aa941ca851e59bc44027<>res://.godot/imported/Walk-Base-Sheet.png-9d99a2f53ad40a3c61fd0136de75761f.ctex::
+Walk-Base-SheetBlack.png::CompressedTexture2D::8913971720984977795::1753844750::1753844751::1::::<><><>0<>0<>184b80531a95ba2d93a828c2760fb96e<>res://.godot/imported/Walk-Base-SheetBlack.png-383d48dd45226ba6d9fcbcd158bf9644.ctex::
+::res://assets/Mob/Small Bee/::1753844750
+::res://assets/Mob/Small Bee/Attack/::1753844750
+Attack-Sheet.png::CompressedTexture2D::9219929742288286154::1753844750::1753844751::1::::<><><>0<>0<>298c279f4d0bce60b8ab9ba107b32ac3<>res://.godot/imported/Attack-Sheet.png-18c5130c448b702dfae1d9789fd84129.ctex::
+::res://assets/Mob/Small Bee/Fly/::1753844750
+Fly-Sheet.png::CompressedTexture2D::6637231213831588920::1753844750::1753844751::1::::<><><>0<>0<>5c387fc77d35a396177d7389ac3e0b3e<>res://.godot/imported/Fly-Sheet.png-087eecdcb83ffe7cb5addcdf01729328.ctex::
+::res://assets/Mob/Small Bee/Hit/::1753844750
+Hit-Sheet.png::CompressedTexture2D::8249764679609326433::1753844750::1753844751::1::::<><><>0<>0<>8ba1c7e2b59bc45edba469a4384ad7a3<>res://.godot/imported/Hit-Sheet.png-35bbb4fcc7282ab995b4bea534d47afd.ctex::
+::res://assets/Mob/Snail/::1753844750
+all.png::CompressedTexture2D::4334207903760407223::1753844750::1753844751::1::::<><><>0<>0<>0abce14b7849c1fa58bbefe93e66af45<>res://.godot/imported/all.png-77b36e88a37a4834fc553282e682c3fd.ctex::
+Dead-Sheet.png::CompressedTexture2D::2437757484886477482::1753844750::1753844751::1::::<><><>0<>0<>c0640e601bc7372e6f81a62aeaf75f2f<>res://.godot/imported/Dead-Sheet.png-3e0b0fc4bcd0f52add25ecf9a9ba7969.ctex::
+Hide-Sheet.png::CompressedTexture2D::3877525534288837114::1753844750::1753844751::1::::<><><>0<>0<>ef1d4cad249a5695880f85b98ac519ca<>res://.godot/imported/Hide-Sheet.png-66a7e4689dba2e36670c184c6321e0cc.ctex::
+walk-Sheet.png::CompressedTexture2D::6938225122283443959::1753844750::1753844751::1::::<><><>0<>0<>826c90849f1a6ea57ab8d41ef29e117d<>res://.godot/imported/walk-Sheet.png-cf87a4c97a249f351447838c4e713761.ctex::
 ::res://assets/parallax/::1753758732
 parallax1.png::CompressedTexture2D/CompressedTexture2D::6516844016072093488::1753721124::1753758732::1::::<><><>0<>0<>acbd61e6ed78c9aa3eb0f8d6c8d32052<>res://.godot/imported/parallax1.png-7c03e536498b16b793af05891623eb4a.ctex::
 parallax2_2.png::CompressedTexture2D/CompressedTexture2D::2505022651475538685::1753721124::1753758732::1::::<><><>0<>0<>23f3f08b5bc939e4c0750fa1ffd4afc5<>res://.godot/imported/parallax2_2.png-c8888c9b497dbe03f780854bc41ce86b.ctex::
 parallax3_2.png::CompressedTexture2D/CompressedTexture2D::8071838275277410042::1753721124::1753758732::1::::<><><>0<>0<>8950c7748ab8a29b883e53ebd8a20657<>res://.godot/imported/parallax3_2.png-ade2ead358efb45c625958e742056e9a.ctex::
 parallax4_2.png::CompressedTexture2D/CompressedTexture2D::4305648095321678596::1753721124::1753758732::1::::<><><>0<>0<>4ce83ff2fabeb32c0a5d2884140b2252<>res://.godot/imported/parallax4_2.png-feabdba94b1fb4fa0db77ce447d91c13.ctex::
 parallax5_2.png::CompressedTexture2D/CompressedTexture2D::732162471317508274::1753721124::1753758732::1::::<><><>0<>0<>4509db68bfd8880516d3005a0db14397<>res://.godot/imported/parallax5_2.png-d7ac9df32dd1fdb8eb4476b31eb2c1ef.ctex::
-::res://scenes/::1753762176
-color_manager.tscn::PackedScene::6829696205878009509::1753762176::0::1::::<><><>0<>0<><>::uid://by5fj3j0jehnu::::res://scripts/color_manager.gd
-game.tscn::PackedScene::1514901009208012418::1753762176::0::1::::<><><>0<>0<><>::uid://bquewee1q4iiu::::res://scripts/game_manager.gd<>uid://cy32p67ts617q::::res://assets/parallax/parallax1.png<>uid://crwybtwcah60m::::res://songs/DJ Snake - Magenta Riddim.ogg<>uid://bbxpme1y0m0e8::::res://assets/parallax/parallax2_2.png<>uid://dnab85vmtbfha::::res://assets/parallax/parallax3_2.png<>uid://b2lxnoxydud4o::::res://assets/parallax/parallax4_2.png<>uid://kowux6qgkq1o::::res://assets/parallax/parallax5_2.png<>uid://dmf170xndj01q::::res://assets/sprite1.png<>uid://d1aegeddeklo::::res://scenes/player.tscn<>uid://c4kmdmcriltof::::res://scenes/color_manager.tscn<>uid://ba6a8jf5la74v::::res://scenes/tile.tscn
-killzone.tscn::PackedScene::2959718394043437787::1753762176::0::1::::<><><>0<>0<><>::uid://vkryjtswwd70::::res://scripts/killzone.gd
-player.tscn::PackedScene::264247817155073884::1753762176::0::1::::<><><>0<>0<><>::uid://dmf170xndj01q::::res://assets/sprite1.png<>uid://dgn7je1muofsa::::res://scripts/player.gd
-tile.tscn::PackedScene::2450475807079789471::1753762176::0::1::::<><><>0<>0<><>::uid://dmf170xndj01q::::res://assets/sprite1.png<>uid://bbq0prpp1vhip::::res://scripts/tile.gd
+::res://scenes/::1753763567
+color_manager.tscn::PackedScene::6829696205878009509::1753763536::0::1::::<><><>0<>0<><>::uid://by5fj3j0jehnu::::res://scripts/color_manager.gd
+game.tscn::PackedScene::1514901009208012418::1753763567::0::1::::<><><>0<>0<><>::uid://bquewee1q4iiu::::res://scripts/game_manager.gd<>uid://cy32p67ts617q::::res://assets/parallax/parallax1.png<>uid://crwybtwcah60m::::res://songs/DJ Snake - Magenta Riddim.ogg<>uid://bbxpme1y0m0e8::::res://assets/parallax/parallax2_2.png<>uid://dnab85vmtbfha::::res://assets/parallax/parallax3_2.png<>uid://b2lxnoxydud4o::::res://assets/parallax/parallax4_2.png<>uid://kowux6qgkq1o::::res://assets/parallax/parallax5_2.png<>uid://dmf170xndj01q::::res://assets/sprite1.png<>uid://d1aegeddeklo::::res://scenes/player.tscn<>uid://c4kmdmcriltof::::res://scenes/color_manager.tscn<>uid://ba6a8jf5la74v::::res://scenes/tile.tscn
+killzone.tscn::PackedScene::2959718394043437787::1753763536::0::1::::<><><>0<>0<><>::uid://vkryjtswwd70::::res://scripts/killzone.gd
+player.tscn::PackedScene::264247817155073884::1753763536::0::1::::<><><>0<>0<><>::uid://dmf170xndj01q::::res://assets/sprite1.png<>uid://dgn7je1muofsa::::res://scripts/player.gd
+tile.tscn::PackedScene::2450475807079789471::1753763536::0::1::::<><><>0<>0<><>::uid://dmf170xndj01q::::res://assets/sprite1.png<>uid://bbq0prpp1vhip::::res://scripts/tile.gd
 ::res://scripts/::1753762176
 bleed_event.gd::GDScript/GDScript::3968626422082081692::1753721124::0::1::::ColorBleedEvent<>RefCounted<><>0<>0<><>::
-color_manager.gd::GDScript::4133205406441770106::1753762176::0::1::::ColorManager<>Node<><>0<>0<><>::
-game_manager.gd::GDScript::3551012109896258284::1753761991::0::1::::<>Node<><>0<>0<><>::
+color_manager.gd::GDScript/GDScript::4133205406441770106::1753762176::0::1::::ColorManager<>Node<><>0<>0<><>::
+game_manager.gd::GDScript/GDScript::3551012109896258284::1753761991::0::1::::<>Node<><>0<>0<><>::
 killzone.gd::GDScript/GDScript::1495685044779566709::1753721124::0::1::::<>Area2D<><>0<>0<><>::
-player.gd::GDScript::7609191290454769320::1753760554::0::1::::<>CharacterBody2D<><>0<>0<><>::
+player.gd::GDScript/GDScript::7609191290454769320::1753760554::0::1::::<>CharacterBody2D<><>0<>0<><>::
 tile.gd::GDScript/GDScript::2491185199909953443::1753721124::0::1::::<>StaticBody2D<><>0<>0<><>::
-::res://shader/::1753763523
-grayscale_color.gdshader::Shader::1374132803312443057::1753763523::0::1::::<><><>0<>0<><>::
+::res://shader/::1753763570
+grayscale_color.gdshader::Shader::1374132803312443057::1753763570::0::1::::<><><>0<>0<><>::
 ::res://songs/::1753758881
 DJ Snake - Magenta Riddim.mp3::AudioStreamMP3/AudioStreamMP3::8343537811644682417::1753758865::1753758865::1::::<><><>0<>0<>9fb7331f5c0000f3e8f9a84d48aaafa6<>res://.godot/imported/DJ Snake - Magenta Riddim.mp3-fe1d45b8adf19a1d393ae173f2339dbd.mp3str::
 DJ Snake - Magenta Riddim.ogg::AudioStreamOggVorbis/AudioStreamOggVorbis::6012928045462900306::1753758881::1753758881::1::::<><><>0<>0<>52219b7dcb0b6dc44cb02a38981c1ea1<>res://.godot/imported/DJ Snake - Magenta Riddim.ogg-6acfb702368133035ee2b5341d68c2d9.oggvorbisstr::

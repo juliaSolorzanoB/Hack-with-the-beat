@@ -1,6 +1,8 @@
-res://scenes/game.tscn
 res://shader/grayscale_color.gdshader
+res://scenes/game.tscn
 res://scenes/player.tscn
 res://scenes/tile.tscn
 res://scenes/killzone.tscn
 res://scenes/color_manager.tscn
+res://scenes/Bee.tscn
+res://scenes/boar.tscn

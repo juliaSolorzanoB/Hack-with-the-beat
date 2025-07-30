@@ -1,12 +1,13 @@
+CollisionShape2D
+AnimatedSprite2D
+Node2D
 Camera2D
 Node
 AudioStreamPlayer
-CollisionShape2D
 Timer
 Area2D
 Sprite2D
 StaticBody2D
-AnimatedSprite2D
 CharacterBody2D
 TileMap
 ParallaxLayer
