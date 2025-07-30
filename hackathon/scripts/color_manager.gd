@@ -30,7 +30,7 @@ func _ready():
 func _deferred_ready():
 	var player_node: Node = get_tree().get_first_node_in_group("player")
 	if player_node:
-		player_camera = player_node.get_node("Camera2D") as Camera2D
+		player_camera = player_node.get_node("Camera") as Camera2D
 		if not player_camera:
 			print("Warning: Player Camera not found! Color effect will not work.")
 	await get_tree().process_frame

@@ -1,3 +1,4 @@
+Node
 CollisionShape2D
 ColorRect
 Sprite2D
@@ -5,7 +6,6 @@ AnimatedSprite2D
 AnimatableBody2D
 Node2D
 Camera2D
-Node
 AudioStreamPlayer
 Timer
 Area2D

@@ -290,10 +290,10 @@ visible = false
 position = Vector2(601, 199)
 
 [node name="Node2D" parent="." instance=ExtResource("12_dinhu")]
-position = Vector2(80, 120)
+position = Vector2(79, 109)
 
 [node name="Boar" parent="." instance=ExtResource("13_kvuet")]
-position = Vector2(275, 132)
+position = Vector2(129, 92)
 
 [node name="Platform" parent="." instance=ExtResource("10_trtic")]
 position = Vector2(163, 195)

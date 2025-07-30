@@ -8,3 +8,6 @@ res://scenes/Bee.tscn
 res://scenes/boar.tscn
 res://scripts/player.gd
 res://scenes/platform.tscn
+res://scripts/color_manager.gd
+res://scripts/node.gd
+res://scenes/node.tscn
