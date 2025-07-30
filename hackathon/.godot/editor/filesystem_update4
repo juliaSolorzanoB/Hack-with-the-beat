@@ -6,3 +6,5 @@ res://scenes/killzone.tscn
 res://scenes/color_manager.tscn
 res://scenes/Bee.tscn
 res://scenes/boar.tscn
+res://scripts/player.gd
+res://scenes/platform.tscn

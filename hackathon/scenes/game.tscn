@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://vt3g0hwshlpa"]
+[gd_scene load_steps=17 format=4 uid="uid://vt3g0hwshlpa"]
 
 [ext_resource type="Script" uid="uid://bquewee1q4iiu" path="res://scripts/game_manager.gd" id="1_dinhu"]
 [ext_resource type="Texture2D" uid="uid://cy32p67ts617q" path="res://assets/parallax/parallax1.png" id="1_p57ef"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://d1aegeddeklo" path="res://scenes/player.tscn" id="6_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://c4kmdmcriltof" path="res://scenes/color_manager.tscn" id="6_vtaks"]
 [ext_resource type="PackedScene" uid="uid://ba6a8jf5la74v" path="res://scenes/tile.tscn" id="9_0tnpc"]
+[ext_resource type="PackedScene" uid="uid://cucubghmxrojj" path="res://scenes/platform.tscn" id="10_trtic"]
 [ext_resource type="PackedScene" uid="uid://unphls5nacuk" path="res://scenes/Bee.tscn" id="12_dinhu"]
 [ext_resource type="PackedScene" uid="uid://cck26odhpl65i" path="res://scenes/boar.tscn" id="13_kvuet"]
 
@@ -289,7 +290,11 @@ visible = false
 position = Vector2(601, 199)
 
 [node name="Node2D" parent="." instance=ExtResource("12_dinhu")]
-position = Vector2(149, 134)
+position = Vector2(80, 120)
 
 [node name="Boar" parent="." instance=ExtResource("13_kvuet")]
-position = Vector2(205, 192)
+position = Vector2(275, 132)
+
+[node name="Platform" parent="." instance=ExtResource("10_trtic")]
+position = Vector2(163, 195)
+scale = Vector2(0.47, 0.47)
