@@ -254,33 +254,42 @@ max_bleed_radius = 100.0
 [node name="tiles" type="Node" parent="."]
 
 [node name="Tile" parent="tiles" instance=ExtResource("9_0tnpc")]
+visible = false
 position = Vector2(280, 199)
 
 [node name="Tile2" parent="tiles" instance=ExtResource("9_0tnpc")]
+visible = false
 position = Vector2(328, 183)
 
 [node name="Tile3" parent="tiles" instance=ExtResource("9_0tnpc")]
+visible = false
 position = Vector2(376, 167)
 
 [node name="Tile4" parent="tiles" instance=ExtResource("9_0tnpc")]
+visible = false
 position = Vector2(424, 151)
 
 [node name="Tile5" parent="tiles" instance=ExtResource("9_0tnpc")]
+visible = false
 position = Vector2(472, 135)
 
 [node name="Tile6" parent="tiles" instance=ExtResource("9_0tnpc")]
+visible = false
 position = Vector2(503, 151)
 
 [node name="Tile7" parent="tiles" instance=ExtResource("9_0tnpc")]
+visible = false
 position = Vector2(536, 166)
 
 [node name="Tile8" parent="tiles" instance=ExtResource("9_0tnpc")]
+visible = false
 position = Vector2(568, 183)
 
 [node name="Tile9" parent="tiles" instance=ExtResource("9_0tnpc")]
+visible = false
 position = Vector2(601, 199)
 
-[node name="Node2D" parent="." instance=ExtResource("12_dinhu")]
+[node name="Bee" parent="." instance=ExtResource("12_dinhu")]
 position = Vector2(517, 190)
 
 [node name="Boar" parent="." instance=ExtResource("13_kvuet")]
