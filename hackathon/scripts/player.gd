@@ -9,7 +9,7 @@ extends CharacterBody2D
 # --- JUMP SYSTEM PARAMETERS ---
 # Two different jump types with different behaviors
 @export_group("Single Jump")
-@export var single_jump_velocity: float = -370.0        # Upward force for tap jumps
+@export var single_jump_velocity: float = -470.0        # Upward force for tap jumps
 @export var single_jump_extra_fall_force: float = 700.0 # Extra gravity while falling
 
 @export_group("Bunny Hop Jump")
@@ -29,7 +29,9 @@ var current_jump_type: JumpType = JumpType.NONE
 
 # --- NODE REFERENCES ---
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var camera: Camera2D = $Camera2D
+@onready var camera: Camera2D = $Camera
+
+
 
 # --- FIXED CAMERA Y POSITION ---
 # creates a side-scrolling effect where the camera only follows X movement

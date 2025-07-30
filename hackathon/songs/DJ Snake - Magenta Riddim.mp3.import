@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dq4w34flnpanp"
+path="res://.godot/imported/DJ Snake - Magenta Riddim.mp3-fe1d45b8adf19a1d393ae173f2339dbd.mp3str"
+
+[deps]
+
+source_file="res://songs/DJ Snake - Magenta Riddim.mp3"
+dest_files=["res://.godot/imported/DJ Snake - Magenta Riddim.mp3-fe1d45b8adf19a1d393ae173f2339dbd.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
