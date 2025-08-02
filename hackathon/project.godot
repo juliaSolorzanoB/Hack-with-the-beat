@@ -13,7 +13,6 @@ config_version=5
 config/name="hackathon"
 run/main_scene="uid://vt3g0hwshlpa"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://Old assets/icon.svg"
 
 [input]
 
