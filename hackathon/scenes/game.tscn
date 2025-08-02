@@ -1,6 +1,7 @@
-[gd_scene load_steps=16 format=4 uid="uid://vt3g0hwshlpa"]
+[gd_scene load_steps=17 format=4 uid="uid://vt3g0hwshlpa"]
 
-[ext_resource type="AudioStream" uid="uid://p6g3m8f6s57h" path="res://Song/SPACE!.mp3" id="1_kvpfn"]
+[ext_resource type="Script" uid="uid://c1jlab4cpxpj6" path="res://scripts/game_manager.gd" id="1_dinhu"]
+[ext_resource type="AudioStream" uid="uid://brocjxqp6uxc2" path="res://Song/8bit-music-for-game-68698.mp3" id="1_kvpfn"]
 [ext_resource type="Texture2D" uid="uid://cy32p67ts617q" path="res://assets/parallax/parallax1.png" id="1_p57ef"]
 [ext_resource type="Texture2D" uid="uid://bbxpme1y0m0e8" path="res://assets/parallax/parallax2_2.png" id="2_u5sy4"]
 [ext_resource type="Texture2D" uid="uid://dnab85vmtbfha" path="res://assets/parallax/parallax3_2.png" id="3_gee14"]
@@ -181,9 +182,11 @@ size = Vector2(334, 1)
 [node name="Game" type="Node2D"]
 
 [node name="Game_Manager" type="Node" parent="."]
+script = ExtResource("1_dinhu")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Game_Manager"]
 stream = ExtResource("1_kvpfn")
+autoplay = true
 
 [node name="Area" type="Node" parent="."]
 

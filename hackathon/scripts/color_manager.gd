@@ -39,7 +39,7 @@ func _deferred_ready():
 	setup_shader()
 
 # --- MAIN UPDATE LOOP ---
-func _physics_process(delta):
+func _physics_process(_delta):
 	# Main update loop that manages all active bleed events and updates shader. - Runs every physics frame for smooth animation.
 	if not player_camera or not shader_material:
 		return
