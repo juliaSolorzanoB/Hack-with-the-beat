@@ -1,0 +1,127 @@
+[gd_scene load_steps=9 format=3 uid="uid://c8pm0hjomyr5l"]
+
+[ext_resource type="Texture2D" uid="uid://dp2xasd5vfmpj" path="res://OIP.webp" id="1_dxm6b"]
+[ext_resource type="Script" uid="uid://8uilt20xu78o" path="res://scripts/retry.gd" id="1_yrlm2"]
+[ext_resource type="FontFile" uid="uid://dxpqo7svrwqaj" path="res://assets/Fonts/LLPIXEL3.ttf" id="2_yrlm2"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u0pb3"]
+texture = ExtResource("1_dxm6b")
+modulate_color = Color(0.687215, 0.687215, 0.687215, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dxm6b"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dxm6b"]
+bg_color = Color(0.484693, 0.558838, 0.633659, 1)
+border_color = Color(0.8, 0.254902, 0.8, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0.756526, 0.791859, 0.134989, 0.6)
+shadow_size = 5
+shadow_offset = Vector2(0, 3.14)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yrlm2"]
+bg_color = Color(0.198593, 0.867142, 0.543098, 1)
+border_color = Color(0.8, 0.254902, 0.8, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0.756526, 0.791859, 0.134989, 0.6)
+shadow_size = 5
+shadow_offset = Vector2(0, 3.14)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_naj2e"]
+bg_color = Color(0.623013, 0.107573, 0.215451, 1)
+border_color = Color(0.8, 0.254902, 0.8, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0.756526, 0.791859, 0.134989, 0.6)
+shadow_size = 5
+shadow_offset = Vector2(0, 3.14)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yrlm2")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_u0pb3")
+
+[node name="HBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -102.0
+offset_top = 84.0
+offset_right = 116.0
+offset_bottom = 176.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="Button" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 29
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dxm6b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dxm6b")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_yrlm2")
+theme_override_styles/normal = SubResource("StyleBoxFlat_naj2e")
+text = "Retry
+"
+
+[node name="Button2" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 29
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dxm6b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dxm6b")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_yrlm2")
+theme_override_styles/normal = SubResource("StyleBoxFlat_naj2e")
+text = "Main Menu
+"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -275.0
+offset_top = -264.0
+offset_right = 250.0
+offset_bottom = -68.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_yrlm2")
+theme_override_font_sizes/font_size = 97
+text = "You Died"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="HBoxContainer/Button" to="." method="_on_retry_pressed"]
+[connection signal="pressed" from="HBoxContainer/Button2" to="." method="_on_mainmenu_pressed"]
