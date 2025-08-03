@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://do8f2p5ri1ll8"]
+[gd_scene load_steps=3 format=3 uid="uid://do8f2p5ri1ll8"]
 
 [ext_resource type="Script" uid="uid://dgo0bwohf7ek8" path="res://scripts/music_manager.gd" id="1_tylfe"]
+[ext_resource type="AudioStream" uid="uid://ce3gjr2bo2087" path="res://music/twinkle-twinkle-little-star-arima-kousei-ver-synthesia_xOYu0pzc.mp3" id="2_hetdf"]
 
 [node name="MusicManager" type="Node"]
 script = ExtResource("1_tylfe")
+base_music_track = ExtResource("2_hetdf")

@@ -2,3 +2,4 @@ res://scenes/tile_long.tscn
 res://shader/grayscale_color.gdshader
 res://scripts/music_manager.gd
 res://scenes/game.tscn
+res://scenes/music_manager.tscn
