@@ -1,5 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://vt3g0hwshlpa"]
+[gd_scene load_steps=14 format=3 uid="uid://vt3g0hwshlpa"]
 
+[ext_resource type="Script" uid="uid://507v03vnqw4t" path="res://scripts/game.gd" id="1_kvpfn"]
 [ext_resource type="Texture2D" uid="uid://cy32p67ts617q" path="res://assets/parallax/parallax1.png" id="1_p57ef"]
 [ext_resource type="Texture2D" uid="uid://bbxpme1y0m0e8" path="res://assets/parallax/parallax2_2.png" id="2_u5sy4"]
 [ext_resource type="Texture2D" uid="uid://dnab85vmtbfha" path="res://assets/parallax/parallax3_2.png" id="3_gee14"]
@@ -173,6 +174,7 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_dinhu")
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_kvpfn")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -227,6 +229,9 @@ max_bleed_radius = 100.0
 [node name="MusicManager" parent="." instance=ExtResource("7_0tnpc")]
 
 [node name="TileGenerator" parent="." instance=ExtResource("8_vtaks")]
+tile_16x8_scene = null
+tile_32x8_scene = null
+kill_zone_scene = null
 
 [node name="Player" parent="." instance=ExtResource("6_u5sy4")]
 position = Vector2(127, 153)

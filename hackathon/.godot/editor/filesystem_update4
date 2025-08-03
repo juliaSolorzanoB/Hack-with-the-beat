@@ -14,3 +14,4 @@ res://scenes/color_manager.tscn
 res://scripts/color_manager.gd
 res://scenes/killzone.tscn
 res://scripts/killzone.gd
+res://scripts/game.gd
