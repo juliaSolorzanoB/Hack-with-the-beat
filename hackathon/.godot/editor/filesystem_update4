@@ -31,3 +31,5 @@ res://scenes/pause_button.tscn
 res://scenes/paused_menu.tscn
 res://scripts/paused_button.gd
 res://scenes/paused_button.tscn
+res://scenes/menus/paused_menu.tscn
+res://scripts/paused_menu.gd
