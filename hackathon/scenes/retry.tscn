@@ -43,7 +43,7 @@ shadow_color = Color(0.756526, 0.791859, 0.134989, 0.6)
 shadow_size = 5
 shadow_offset = Vector2(0, 3.14)
 
-[node name="Control" type="Control"]
+[node name="Retry" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
