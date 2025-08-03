@@ -13,12 +13,23 @@ var player_camera: Camera2D  # Reference to player's camera for world-to-screen 
 # Array holding all active color bleed events
 var active_bleed_events: Array[ColorBleedEvent] = []
 
+# --- PROGRESSIVE RADIUS SYSTEM - UPDATED FOR 50-400 RANGE ---
+@export var min_bleed_radius: float = 50.0   # Starting radius
+@export var max_bleed_radius: float = 400.0  # Maximum radius when fully progressed (CHANGED from 200)
+var current_max_radius: float = 50.0         # Current maximum radius (grows over time)
+
+# --- PROGRESS TRACKING SYSTEM ---
+var game_progress_percentage: float = 0.0    # 0.0 to 100.0 progress through the game
+
 # --- ANIMATION PARAMETERS ---
 # control how color bleed effects animate over time
-@export var max_bleed_radius: float = 120.0  # Maximum size of color spots
 @export var grow_duration: float = 1.0       # Time to grow to full size
 @export var stay_duration: float = 0.5       # Time to stay at full size
 @export var shrink_duration: float = 1.0     # Time to shrink away
+
+# --- DEATH EFFECT SYSTEM ---
+var is_death_mode: bool = false
+var death_fade_tween: Tween
 
 # --- INITIALIZATION ---
 func _ready():
@@ -32,7 +43,6 @@ func _deferred_ready():
 	if player_node:
 		player_camera = player_node.get_node("Camera2D")
 		if not player_camera:
-			# DELETE LATER - debuging purposes
 			print("Warning: Player Camera not found! The color effect will not work.")
 	
 	await get_tree().process_frame
@@ -40,7 +50,7 @@ func _deferred_ready():
 
 # --- MAIN UPDATE LOOP ---
 func _physics_process(delta):
-	# Main update loop that manages all active bleed events and updates shader. - Runs every physics frame for smooth animation.
+	# Main update loop that manages all active bleed events and updates shader.
 	if not player_camera or not shader_material:
 		return
 
@@ -50,33 +60,76 @@ func _physics_process(delta):
 	# Send current event data to the shader for rendering
 	update_shader_parameters()
 
+# --- PROGRESSIVE RADIUS SYSTEM - UPDATED WITH MUSIC-BASED PROGRESS ---
+func update_progression():
+	"""Updates the maximum bleed radius based on music playback progress."""
+	# Get music manager to track actual music progress
+	var music_manager = get_tree().root.find_child("MusicManager", true, false)
+	if not music_manager or not music_manager.is_playing:
+		return
+	
+	# Calculate progress based on music playback time vs total music duration
+	var current_time = 0.0
+	var total_duration = 0.0
+	
+	if music_manager.audio_players.size() > 0 and music_manager.audio_players[0].stream:
+		current_time = music_manager.audio_players[0].get_playback_position()
+		total_duration = music_manager.audio_players[0].stream.get_length()
+	
+	if total_duration > 0:
+		# Calculate progress as percentage of music completion
+		game_progress_percentage = (current_time / total_duration) * 100.0
+		game_progress_percentage = clamp(game_progress_percentage, 0.0, 100.0)
+		
+		# Convert percentage to 0.0-1.0 for radius calculation
+		var progression = game_progress_percentage / 100.0
+		
+		# FIXED: Direct linear interpolation from 50 to 400
+		current_max_radius = min_bleed_radius + (progression * (max_bleed_radius - min_bleed_radius))
+		current_max_radius = clamp(current_max_radius, min_bleed_radius, max_bleed_radius)
+		
+		print("Music Progress: ", game_progress_percentage, "% | Current max radius: ", current_max_radius, " | Time: ", current_time, "/", total_duration)
+
 # --- BLEED EVENT LIFECYCLE ---
 func create_new_bleed_event(platform_global_pos: Vector2):
-	# Creates a new color bleed effect at the specified world position. - Prevents duplicate events at the same location.
+	# Creates a new color bleed effect at the specified world position.
+	
+	# Don't create new events during death mode
+	if is_death_mode:
+		return
+	
+	# Prevent duplicate events at the same location
 	for event in active_bleed_events:
 		if event.position == platform_global_pos:
 			return
 
-	# Create new event object
+	# Update progression before creating new event
+	update_progression()
+
+	# Create new event object with current max radius
 	var new_event = ColorBleedEvent.new()  
 	new_event.position = platform_global_pos
-	new_event.max_radius = max_bleed_radius
+	new_event.max_radius = current_max_radius  # Use progressive radius
 	new_event.state = 0 # Start in the growing state
 	active_bleed_events.append(new_event)
-	# DELETE LATER - debuging purposes
-	print("Created bleed event at world position: ", platform_global_pos)
+	
+	print("Created bleed event at world position: ", platform_global_pos, " with max radius: ", current_max_radius)
 	
 	# Animate the growing phase with smooth easing
 	var grow_tween = create_tween()
 	grow_tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	grow_tween.tween_property(new_event, "current_radius", new_event.max_radius, grow_duration)
 
-	# Stay at full size, then begin shrinking
+	# Stay at full size, then begin shrinking (unless in death mode)
 	grow_tween.tween_interval(stay_duration)
 	grow_tween.tween_callback(shrink_event.bind(new_event))
 
 func shrink_event(event: ColorBleedEvent):
 	"""Begins the shrinking animation for a bleed event."""
+	# Don't shrink during death mode - events are cleared differently
+	if is_death_mode:
+		return
+		
 	event.state = 2  # 2 = shrinking
 	
 	# Animate shrinking with smooth easing
@@ -102,7 +155,6 @@ func update_bleed_events():
 
 func update_shader_parameters():
 	# Sends current camera and bleed event data to the shader.
-	# This is where world coordinates are converted to shader-usable data.
 	if not player_camera or not shader_material:
 		return
 
@@ -115,30 +167,6 @@ func update_shader_parameters():
 	var camera_offset = player_camera.offset
 	var viewport_size = get_viewport().get_visible_rect().size
 	
-	# DELETE LATER - debuging purposes
-	# DEBUG: Print detailed info when events are active (for troubleshooting)
-	if active_bleed_events.size() > 0:
-		print("=== SHADER UPDATE DEBUG ===")
-		print("Camera world pos: ", camera_world_pos)
-		print("Camera offset: ", camera_offset)
-		print("Camera zoom: ", camera_zoom)
-		print("Camera rotation: ", camera_rotation)
-		print("Viewport size: ", viewport_size)
-		print("Active events count: ", active_bleed_events.size())
-		if active_bleed_events.size() > 0:
-			print("First event position: ", active_bleed_events[0].position)
-			print("First event radius: ", active_bleed_events[0].current_radius)
-		print("============================")
-		
-		# Additional debug: player position and distance calculations
-		var player_node = get_tree().get_first_node_in_group("player")
-		if player_node:
-			print("Current player position: ", player_node.global_position)
-			print("Distance from event to player: ", active_bleed_events[0].position.distance_to(player_node.global_position))
-		
-		print("Screen center should map to world pos: ", camera_world_pos)
-		print("============================")
-		
 	# Convert bleed events to shader-compatible format
 	# Shader expects Vector4 arrays: (x, y, radius, unused)
 	for i in range(min(active_bleed_events.size(), 64)):  # Shader limit: 64 events
@@ -168,19 +196,73 @@ func setup_shader():
 	color_rect.material = ShaderMaterial.new()
 	color_rect.material.shader = preload("res://shader/grayscale_color.gdshader")
 	
-	# Configure shader parameters
+	# Configure shader parameters - FIXED VALUES, NO MUSIC INTERFERENCE
 	shader_material = color_rect.material
-	shader_material.set_shader_parameter("color_strength", 0.7)    # How much color shows in bleed areas
-	shader_material.set_shader_parameter("grayscale_strength", 0.9) # How gray the base image is
+	shader_material.set_shader_parameter("color_strength", 0.7)    # Fixed color strength
+	shader_material.set_shader_parameter("grayscale_strength", 0.9) # Fixed grayscale strength
 	canvas_layer.add_child(color_rect)
 
-# --- RUNTIME SHADER CONTROL ---
-func set_color_strength(strength: float):
-	#Adjusts how much color is revealed in bleed areas (0.0 = no color, 1.0 = full color).
-	if shader_material:
-		shader_material.set_shader_parameter("color_strength", strength)
+# --- DEATH EFFECT SYSTEM ---
+func trigger_death_fade():
+	"""
+	FIXED: Triggers the death effect by immediately starting shrink animations 
+	for ALL active bleed events simultaneously.
+	"""
+	print("Triggering death fade effect...")
+	is_death_mode = true
+	
+	# Stop any existing death fade
+	if death_fade_tween:
+		death_fade_tween.kill()
+		
+	# Create a new tween to fade the global grayscale strength
+	death_fade_tween = create_tween()
+	death_fade_tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_LINEAR)
+	death_fade_tween.tween_property(shader_material, "shader_parameter/grayscale_strength", 1.0, 2.0)
+	
+	# FIXED: Immediately start shrinking ALL active events together
+	if not active_bleed_events.is_empty():
+		print("Starting death shrink for ", active_bleed_events.size(), " active bleed events")
+		
+		for event in active_bleed_events:
+			# Change state to shrinking
+			event.state = 2
+			
+			# Create individual shrink tween for each event
+			var fade_tween = create_tween()
+			fade_tween.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
+			fade_tween.tween_property(event, "current_radius", 0.0, shrink_duration)
+			fade_tween.tween_callback(remove_event.bind(event))
+	else:
+		print("No active bleed events to shrink during death")
 
-func set_grayscale_strength(strength: float):
-	# (0.0 = no color, 1.0 = full grayscale)
-	if shader_material:
-		shader_material.set_shader_parameter("grayscale_strength", strength)
+# --- PROGRESS TRACKING FUNCTIONS ---
+func get_game_progress_percentage() -> float:
+	"""Returns current game progress as a percentage (0.0 to 100.0)."""
+	return game_progress_percentage
+
+# --- DEBUG FUNCTIONS ---
+func get_current_max_radius() -> float:
+	"""Returns current maximum radius for debugging."""
+	return current_max_radius
+
+func get_progression_info() -> Dictionary:
+	"""Returns progression information for debugging."""
+	return {
+		"game_progress_percentage": game_progress_percentage,
+		"current_max_radius": current_max_radius,
+		"min_radius": min_bleed_radius,
+		"max_radius": max_bleed_radius,
+		"is_death_mode": is_death_mode,
+		"active_events": active_bleed_events.size()
+	}
+
+func clear_all_bleed_events():
+	"""Immediately removes all active bleed events."""
+	for event in active_bleed_events:
+		event.event_finished = true
+	
+	# Force immediate cleanup
+	update_bleed_events()
+	
+	print("All bleed events cleared. Remaining events: ", active_bleed_events.size())

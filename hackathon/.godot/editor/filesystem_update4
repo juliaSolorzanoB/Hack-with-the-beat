@@ -10,3 +10,5 @@ res://scenes/player.tscn
 res://scripts/player.gd
 res://scripts/tile.gd
 res://scripts/tile_long.gd
+res://scenes/color_manager.tscn
+res://scripts/color_manager.gd
