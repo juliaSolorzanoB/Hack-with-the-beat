@@ -1,10 +1,10 @@
-Node
-CanvasLayer
 Button
+CanvasLayer
+Control
+Node
 Label
 Panel
 VBoxContainer
-Control
 CollisionShape2D
 Timer
 Area2D
