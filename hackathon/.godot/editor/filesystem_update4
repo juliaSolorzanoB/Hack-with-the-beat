@@ -4,3 +4,5 @@ res://scripts/music_manager.gd
 res://scenes/game.tscn
 res://scenes/music_manager.tscn
 res://scripts/tile_generator.gd
+res://scripts/progress_ui.gd
+res://scenes/progress_ui.tscn
