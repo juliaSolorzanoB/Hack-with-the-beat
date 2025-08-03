@@ -3,13 +3,13 @@ extends CharacterBody2D
 # --- MOVEMENT CONFIGURATION ---
 # control how the player accelerates and moves
 @export var initial_speed: float = 75.0      # Starting movement speed
-@export var max_speed: float = 150.0         # Maximum horizontal speed
+@export var max_speed: float = 150        # Maximum horizontal speed
 @export var acceleration_rate: float = 5.0   # How quickly speed increases
 
 # --- JUMP SYSTEM PARAMETERS ---
 # Two different jump types with different behaviors
 @export_group("Single Jump")
-@export var single_jump_velocity: float = -370.0        # Upward force for tap jumps
+@export var single_jump_velocity: float = -330.0        # Upward force for tap jumps
 @export var single_jump_extra_fall_force: float = 700.0 # Extra gravity while falling
 
 @export_group("Bunny Hop Jump")
@@ -128,7 +128,29 @@ func update_animation(on_floor: bool) -> void:
 		animated_sprite.play(target_animation)
 
 func die() -> void:
-	#Called when player dies. Disables movement and plays death animation.
+	#Called when player dies.
+	# Disables movement and plays death animation.
 	can_move = false
 	if animated_sprite.animation != "dead":
 		animated_sprite.play("dead")
+	
+	# Trigger music fadeout and shader effects
+	trigger_death_effects()
+
+
+func trigger_death_effects():
+	print("Player death - triggering effects...")
+	
+	# Fade out music
+	var music_manager = get_tree().root.find_child("MusicManager", true, false)
+	if music_manager:
+		music_manager.fade_out_music()
+		print("Music fade out triggered")
+	
+	# Trigger shader fade to gray
+	var color_manager = get_tree().root.find_child("ColorManager", true, false)
+	if color_manager:
+		color_manager.trigger_death_fade() # The correct function
+		print("Death fade effect triggered")
+	else:
+		print("WARNING: ColorManager not found for death effects!")
