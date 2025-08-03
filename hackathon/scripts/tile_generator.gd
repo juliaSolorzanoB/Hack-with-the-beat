@@ -25,7 +25,7 @@ const GROUND_OFFSET: float = 16.0  # Offset applied to tiles that would be too c
 const MAX_JUMP_UP: int = 2
 const SAFE_FALL_DOWN: int = 1
 const MIN_HORIZONTAL_SPACING: float = 16.0
-const MAX_HORIZONTAL_SPACING: float = 40.0
+const MAX_HORIZONTAL_SPACING: float = 35.0
 
 # --- DEBUG VISUALIZATION ---
 @export var show_debug_visualization: bool = true

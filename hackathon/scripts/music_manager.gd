@@ -28,7 +28,7 @@ const INTENSITY_HISTORY_SIZE: int = 10
 func _ready():
 	# Auto-load base track if not assigned
 	if not base_music_track:
-		base_music_track = load("res://music/twinkle-twinkle-little-star-arima-kousei-ver-synthesia_xOYu0pzc.mp3")  # Update this path
+		base_music_track = load("res://music/twinkle-twinkle-little-star-arima-kousei-ver-synthesia_qHSKJMUN.mp3")  # Update this path
 		if not base_music_track:
 			print("ERROR: Could not load base music track")
 	

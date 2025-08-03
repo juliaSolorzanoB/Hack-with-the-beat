@@ -15,3 +15,8 @@ res://scripts/color_manager.gd
 res://scenes/killzone.tscn
 res://scripts/killzone.gd
 res://scripts/game.gd
+res://scenes/tile.tscn
+res://scenes/tile_generator.tscn
+res://scenes/tile_manager.tscn
+res://scripts/game_finished.gd
+res://scenes/game_finished.tscn
