@@ -8,3 +8,5 @@ res://scripts/progress_ui.gd
 res://scenes/progress_ui.tscn
 res://scenes/player.tscn
 res://scripts/player.gd
+res://scripts/tile.gd
+res://scripts/tile_long.gd
