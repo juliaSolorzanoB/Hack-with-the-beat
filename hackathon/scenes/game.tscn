@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://vt3g0hwshlpa"]
+[gd_scene load_steps=12 format=3 uid="uid://vt3g0hwshlpa"]
 
 [ext_resource type="Texture2D" uid="uid://cy32p67ts617q" path="res://assets/parallax/parallax1.png" id="1_p57ef"]
 [ext_resource type="Texture2D" uid="uid://bbxpme1y0m0e8" path="res://assets/parallax/parallax2_2.png" id="2_u5sy4"]
@@ -8,8 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dmf170xndj01q" path="res://assets/sprite1.png" id="6_kvpfn"]
 [ext_resource type="PackedScene" uid="uid://d1aegeddeklo" path="res://scenes/player.tscn" id="6_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://c4kmdmcriltof" path="res://scenes/color_manager.tscn" id="6_vtaks"]
-[ext_resource type="PackedScene" uid="uid://bifyen0bdqyv8" path="res://scenes/killzone.tscn" id="8_gee14"]
-[ext_resource type="PackedScene" uid="uid://ba6a8jf5la74v" path="res://scenes/tile.tscn" id="9_0tnpc"]
+[ext_resource type="PackedScene" uid="uid://do8f2p5ri1ll8" path="res://scenes/music_manager.tscn" id="7_0tnpc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dinhu"]
 texture = ExtResource("6_kvpfn")
@@ -172,11 +171,6 @@ texture = ExtResource("6_kvpfn")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_dinhu")
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gee14"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vtaks"]
-size = Vector2(334, 1)
-
 [node name="Game" type="Node2D"]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
@@ -229,6 +223,8 @@ centered = false
 [node name="ColorManager" parent="." instance=ExtResource("6_vtaks")]
 max_bleed_radius = 100.0
 
+[node name="MusicManager" parent="." instance=ExtResource("7_0tnpc")]
+
 [node name="Player" parent="." instance=ExtResource("6_u5sy4")]
 position = Vector2(127, 153)
 
@@ -242,47 +238,3 @@ limit_bottom = 190
 tile_set = SubResource("TileSet_kvuet")
 format = 2
 layer_0/tile_data = PackedInt32Array(851969, 589824, 3, 851970, 589824, 3, 851971, 589824, 3, 851972, 589824, 3, 851973, 589824, 3, 851974, 589824, 3, 851975, 589824, 3, 851976, 589824, 3, 851977, 589824, 3, 851978, 589824, 3, 851979, 589824, 3, 851980, 589824, 3, 851981, 589824, 3, 851982, 589824, 3, 851983, 589824, 3, 851984, 589824, 3, 851985, 589824, 3, 851986, 589824, 3, 851987, 589824, 3, 851988, 589824, 3, 851989, 589824, 3, 851990, 589824, 3, 851991, 589824, 3, 851992, 589824, 3, 851993, 589824, 3, 851994, 589824, 3, 851995, 589824, 3, 851996, 589824, 3, 851997, 589824, 3, 851998, 589824, 3, 851999, 589824, 3, 852000, 589824, 3, 852001, 589824, 3, 852002, 589824, 3, 852003, 589824, 3, 852004, 589824, 3, 852005, 589824, 3, 852006, 589824, 3, 852007, 589824, 3, 852008, 589824, 3, 852009, 589824, 3, 852010, 589824, 3, 852011, 589824, 3, 852012, 589824, 3, 852013, 589824, 3, 852014, 589824, 3, 852015, 589824, 3, 851968, 524288, 3)
-
-[node name="KillZone" type="Node" parent="."]
-
-[node name="Outer Kzone" parent="KillZone" instance=ExtResource("8_gee14")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone/Outer Kzone"]
-position = Vector2(161, 238)
-shape = SubResource("WorldBoundaryShape2D_gee14")
-
-[node name="Floor Kzone" parent="KillZone" instance=ExtResource("8_gee14")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone/Floor Kzone"]
-position = Vector2(440, 207.5)
-shape = SubResource("RectangleShape2D_vtaks")
-debug_color = Color(0.844925, 0.159846, 0.833487, 0.42)
-
-[node name="tiles" type="Node" parent="."]
-
-[node name="Tile" parent="tiles" instance=ExtResource("9_0tnpc")]
-position = Vector2(280, 199)
-
-[node name="Tile2" parent="tiles" instance=ExtResource("9_0tnpc")]
-position = Vector2(328, 183)
-
-[node name="Tile3" parent="tiles" instance=ExtResource("9_0tnpc")]
-position = Vector2(376, 167)
-
-[node name="Tile4" parent="tiles" instance=ExtResource("9_0tnpc")]
-position = Vector2(424, 151)
-
-[node name="Tile5" parent="tiles" instance=ExtResource("9_0tnpc")]
-position = Vector2(472, 135)
-
-[node name="Tile6" parent="tiles" instance=ExtResource("9_0tnpc")]
-position = Vector2(503, 151)
-
-[node name="Tile7" parent="tiles" instance=ExtResource("9_0tnpc")]
-position = Vector2(536, 166)
-
-[node name="Tile8" parent="tiles" instance=ExtResource("9_0tnpc")]
-position = Vector2(568, 183)
-
-[node name="Tile9" parent="tiles" instance=ExtResource("9_0tnpc")]
-position = Vector2(601, 199)
