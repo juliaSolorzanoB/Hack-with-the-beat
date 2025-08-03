@@ -20,3 +20,12 @@ res://scenes/tile_generator.tscn
 res://scenes/tile_manager.tscn
 res://scripts/game_finished.gd
 res://scenes/game_finished.tscn
+res://scenes/main_menu.tscn
+res://scenes/main_menu.gd
+res://scenes/Finished_menu.tscn
+res://scripts/finished_menu.gd
+res://scenes/finished_menu.tscn
+res://scripts/main_menu.gd
+res://scripts/pause_button.gd
+res://scenes/pause_button.tscn
+res://scenes/paused_menu.tscn

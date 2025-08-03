@@ -266,3 +266,24 @@ func clear_all_bleed_events():
 	update_bleed_events()
 	
 	print("All bleed events cleared. Remaining events: ", active_bleed_events.size())
+
+func check_game_completion():
+	if game_progress_percentage >= 100.0:
+		print("Song reached 100%! Game finished.")
+		
+		# Stop all music
+		var music_manager = get_tree().root.find_child("MusicManager", true, false)
+		if music_manager:
+			music_manager.fade_out_music()
+		
+		# Find and remove all tiles and killzones
+		var tiles_to_delete = get_tree().get_nodes_in_group("tiles")
+		for tile in tiles_to_delete:
+			tile.queue_free()
+		
+		var killzones_to_delete = get_tree().get_nodes_in_group("killzones")
+		for killzone in killzones_to_delete:
+			killzone.queue_free()
+		
+		# Change to the "Game Finished" scene
+		get_tree().change_scene_to_file("res://scenes/finished_menu.tscn")

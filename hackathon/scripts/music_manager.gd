@@ -28,7 +28,7 @@ const INTENSITY_HISTORY_SIZE: int = 10
 func _ready():
 	# Auto-load base track if not assigned
 	if not base_music_track:
-		base_music_track = load("res://music/twinkle-twinkle-little-star-arima-kousei-ver-synthesia_qHSKJMUN.mp3")  # Update this path
+		base_music_track = load("res://music/Nightcore - Takedown (Huntrix).mp3")  # Update this path
 		if not base_music_track:
 			print("ERROR: Could not load base music track")
 	
@@ -55,7 +55,7 @@ func _ready():
 	load_music_data()
 
 func load_music_data():
-	var file_path = "res://music/music_analysis_data.json"
+	var file_path = "res://music/3music_analysis_data.json"
 	var file = FileAccess.open(file_path, FileAccess.READ)
 	if file:
 		var json_string = file.get_as_text()
