@@ -1,29 +1,28 @@
-extends CharacterBody2D
+extends CharacterBody2D # Player.gd
+# Manages movement, jumping, animations, and death state.
 
 # --- MOVEMENT CONFIGURATION ---
-# control how the player accelerates and moves
-@export var initial_speed: float = 75.0      # Starting movement speed
-@export var max_speed: float = 80        # Maximum horizontal speed
-@export var acceleration_rate: float = 5.0   # How quickly speed increases
+@export var initial_speed: float = 75.0      # Starting horizontal speed.
+@export var max_speed: float = 80.0          # Maximum horizontal speed.
+@export var acceleration_rate: float = 5.0   # Rate at which the player accelerates on the ground.
 
 # --- JUMP SYSTEM PARAMETERS ---
-# Two different jump types with different behaviors
 @export_group("Single Jump")
-@export var single_jump_velocity: float = -320.0        # Upward force for tap jumps
-@export var single_jump_extra_fall_force: float = 680.0 # Extra gravity while falling
+@export var single_jump_velocity: float = -320.0        # Upward velocity for a quick tap jump.
+@export var single_jump_extra_fall_force: float = 680.0 # Extra gravity for a faster fall after a single jump.
 
 @export_group("Bunny Hop Jump")
-@export var bunny_hop_velocity: float = -340.0          # Upward force for held jumps
-@export var bunny_hop_extra_fall_force: float = 370.0   # Less fall force for smoother hops
-@export var bunny_hop_lockout_duration: float = 0.2    # Cooldown between bunny hops
+@export var bunny_hop_velocity: float = -340.0          # Upward velocity for a held jump.
+@export var bunny_hop_extra_fall_force: float = 370.0   # Less extra gravity for a smoother fall during a bunny hop.
+@export var bunny_hop_lockout_duration: float = 0.2    # Cooldown to prevent spamming bunny hops.
 
 # --- RUNTIME STATE VARIABLES ---
-var current_speed: float = 0.0               # Current horizontal movement speed
+var current_speed: float = 0.0               # The player's current horizontal speed.
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
-var jump_lockout_timer: float = 0.0          # Prevents rapid bunny hopping
-var can_move: bool = true                    # Disables movement when player dies
+var jump_lockout_timer: float = 0.0          # Timer for the bunny hop cooldown.
+var can_move: bool = true                    # Flag to disable player input, e.g., on death.
 
-# Jump type tracking - determines which fall physics to apply
+# Jump type tracking - determines which fall physics to apply.
 enum JumpType { NONE, SINGLE_JUMP, BUNNY_HOP }
 var current_jump_type: JumpType = JumpType.NONE
 
@@ -31,30 +30,30 @@ var current_jump_type: JumpType = JumpType.NONE
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var camera: Camera2D = $Camera2D
 
-# --- FIXED CAMERA Y POSITION ---
-# creates a side-scrolling effect where the camera only follows X movement
-var camera_fixed_y: float = 0.0
+# --- CAMERA SETUP ---
+var camera_fixed_y: float = 0.0 # Stores the initial Y position to create a side-scrolling effect.
 
 # --- INITIALIZATION ---
 func _ready() -> void:
 	current_speed = initial_speed
-	animated_sprite.flip_h = false # Makes character face right at all times - disables left flip
-	add_to_group("player")  # Important: allows tiles to detect this as player
+	# The character is always facing right in this game, so we don't need to flip the sprite.
+	animated_sprite.flip_h = false
+	add_to_group("player")  # Add the player to a group for easy detection by other nodes like tiles.
 	camera.make_current()
-	
-	# Lock the camera's Y position at game start for side-scrolling effect
+
+	# Lock the camera's Y position at game start.
 	camera_fixed_y = camera.global_position.y
 
 # --- MAIN GAME LOOP ---
 func _physics_process(delta: float) -> void:
-	# Death state: only apply gravity, no player control
+	# If the player cannot move (e.g., after dying), just apply gravity.
 	if not can_move:
 		move_and_slide()
 		return
 
 	var on_floor_now = is_on_floor()
 
-	# Apply physics in order: gravity → jump input → horizontal movement → animation
+	# Apply physics in a specific order for consistent behavior.
 	apply_gravity_and_fall_force(delta, on_floor_now)
 	update_jump_lockout(delta)
 	handle_jump_input(on_floor_now)
@@ -62,41 +61,37 @@ func _physics_process(delta: float) -> void:
 	velocity.x = current_speed
 	update_animation(on_floor_now)
 
+	# The main physics function for CharacterBody2D.
 	move_and_slide()
 
-	# Important: maintain side-scrolling camera behavior
+	# Enforce the side-scrolling camera behavior by fixing its Y position.
 	camera.global_position.y = camera_fixed_y
 
 
 # --- PHYSICS SYSTEMS ---
-
 func apply_gravity_and_fall_force(delta: float, on_floor: bool) -> void:
-	
-	# Applies gravity and additional fall forces based on jump type.
+	# Applies gravity and additional fall forces based on the current jump type.
 	if not on_floor:
 		velocity.y += gravity * delta
 		
-		# based on current jump type
+		# Apply different fall forces depending on whether the player did a single jump or a bunny hop.
 		match current_jump_type:
 			JumpType.SINGLE_JUMP:
-				# Heavier fall 
 				velocity.y += single_jump_extra_fall_force * delta
 			JumpType.BUNNY_HOP:
-				# Lighter fall 
 				velocity.y += bunny_hop_extra_fall_force * delta
 	else:
-		# Reset jump type when landing
+		# Reset the jump type when the player lands on the floor.
 		if current_jump_type != JumpType.NONE:
 			current_jump_type = JumpType.NONE
 
 func update_jump_lockout(delta: float) -> void:
-	#Updates the bunny hop cooldown timer.
+	# Decrements the bunny hop cooldown timer.
 	if jump_lockout_timer > 0:
 		jump_lockout_timer -= delta
 
 func handle_jump_input(on_floor: bool) -> void:
-	
-	# Handles jump input with two different jump types:
+	# Checks for jump input and executes the appropriate jump type.
 	if on_floor and jump_lockout_timer <= 0:
 		if Input.is_action_just_pressed("jump"):
 			perform_jump(JumpType.SINGLE_JUMP)
@@ -104,22 +99,22 @@ func handle_jump_input(on_floor: bool) -> void:
 			perform_jump(JumpType.BUNNY_HOP)
 
 func perform_jump(type: JumpType) -> void:
-	#Executes the jump with the specified type and sets up fall physics
+	# Sets the jump velocity and jump type, and starts the bunny hop cooldown if applicable.
 	current_jump_type = type
 	match type:
 		JumpType.SINGLE_JUMP:
 			velocity.y = single_jump_velocity
 		JumpType.BUNNY_HOP:
 			velocity.y = bunny_hop_velocity
-			jump_lockout_timer = bunny_hop_lockout_duration  # Prevent spam
+			jump_lockout_timer = bunny_hop_lockout_duration
 
 func update_horizontal_speed(delta: float, on_floor: bool) -> void:
-	#Automatically accelerates the player while on ground.
+	# Automatically accelerates the player while they are on the ground.
 	if on_floor:
 		current_speed = min(current_speed + acceleration_rate * delta, max_speed)
 
 func update_animation(on_floor: bool) -> void:
-	#Simple animation system: run when grounded, jump when airborne.
+	# Switches between "run" and "jump" animations based on whether the player is on the floor.
 	var target_animation: String = "jump"
 	if on_floor:
 		target_animation = "run"
@@ -128,29 +123,20 @@ func update_animation(on_floor: bool) -> void:
 		animated_sprite.play(target_animation)
 
 func die() -> void:
-	#Called when player dies.
-	# Disables movement and plays death animation.
+	# Handles the player's death sequence.
 	can_move = false
 	if animated_sprite.animation != "dead":
 		animated_sprite.play("dead")
 	
-	# Trigger music fadeout and shader effects
+	# Trigger death-related effects in other managers.
 	trigger_death_effects()
 
-
 func trigger_death_effects():
-	print("Player death - triggering effects...")
-	
-	# Fade out music
+	# Finds and calls the music and color managers to trigger a fade effect.
 	var music_manager = get_tree().root.find_child("MusicManager", true, false)
 	if music_manager:
 		music_manager.fade_out_music()
-		print("Music fade out triggered")
 	
-	# Trigger shader fade to gray
 	var color_manager = get_tree().root.find_child("ColorManager", true, false)
 	if color_manager:
-		color_manager.trigger_death_fade() # The correct function
-		print("Death fade effect triggered")
-	else:
-		print("WARNING: ColorManager not found for death effects!")
+		color_manager.trigger_death_fade()

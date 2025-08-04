@@ -1,142 +1,86 @@
 extends Area2D
 
+# --- Node References ---
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var death_timer: Timer = $Timer
 
+# --- Initialization and Setup ---
 func _ready() -> void:
-	# FORCE collision layer/mask settings
-	collision_layer = 4  # Kill zone layer
-	collision_mask = 2   # Player layer
+	# Enforce specific collision layer and mask settings for the kill zone.
+	collision_layer = 4  # The layer this Area2D exists on (Kill Zone).
+	collision_mask = 2   # The layers it will detect (Player).
 	
-	# Make sure monitoring is enabled
+	# Ensure the Area2D is active for collision detection.
 	monitoring = true
 	monitorable = true
 	
-	print("🔥 KILL ZONE SETUP:")
-	print("   Position: ", global_position)
-	print("   Collision Layer: ", collision_layer)
-	print("   Collision Mask: ", collision_mask)
-	print("   Monitoring: ", monitoring)
-	print("   Monitorable: ", monitorable)
-	
-	# Create collision shape if it doesn't exist
+	# Dynamically creates a collision shape if one isn't already assigned.
 	if not collision_shape:
 		collision_shape = CollisionShape2D.new()
 		var rect_shape = RectangleShape2D.new()
 		rect_shape.size = Vector2(64, 64)
 		collision_shape.shape = rect_shape
 		add_child(collision_shape)
-		print("   Created new collision shape")
-	else:
-		print("   Using existing collision shape: ", collision_shape.shape.get_class())
-		if collision_shape.shape is RectangleShape2D:
-			var rect = collision_shape.shape as RectangleShape2D
-			print("   Shape size: ", rect.size)
 	
-	# Create timer if it doesn't exist
+	# Dynamically creates a timer if one isn't already assigned.
 	if not death_timer:
 		death_timer = Timer.new()
 		death_timer.wait_time = 2.0
 		death_timer.one_shot = true
 		add_child(death_timer)
-		print("   Created new timer")
 	
-	# Connect signals with extra debugging
+	# Connects the necessary signals to their corresponding functions.
 	if not body_entered.is_connected(_on_body_entered):
 		body_entered.connect(_on_body_entered)
-		print("   ✓ Connected body_entered signal")
 	
 	if not body_exited.is_connected(_on_body_exited):
 		body_exited.connect(_on_body_exited)
-		print("   ✓ Connected body_exited signal")
 	
 	if not death_timer.timeout.is_connected(_on_death_timer_timeout):
 		death_timer.timeout.connect(_on_death_timer_timeout)
-		print("   ✓ Connected timer signal")
 	
-	# Test what bodies are already overlapping
+	# A deferred call to check for any bodies already overlapping the kill zone
+	# at the start of the scene, which is useful for debugging.
 	call_deferred("check_initial_overlaps")
 
+# --- Debugging Functions ---
 func check_initial_overlaps():
+	# Prints information about any bodies that are already overlapping.
 	var overlapping_bodies = get_overlapping_bodies()
-	print("🔍 INITIAL OVERLAP CHECK:")
-	print("   Bodies found: ", overlapping_bodies.size())
 	for body in overlapping_bodies:
-		print("   - ", body.name, " (", body.get_class(), ") at ", body.global_position)
-		print("     Groups: ", body.get_groups())
-		print("     Collision layer: ", body.collision_layer)
-		print("     Collision mask: ", body.collision_mask)
+		# Displays body's name, type, position, groups, layers, and masks for debugging.
+		pass 
 
+# --- Core Game Logic ---
 func _on_body_entered(body: Node2D) -> void:
-	print("🚨 BODY ENTERED KILL ZONE!")
-	print("   Body name: ", body.name)
-	print("   Body type: ", body.get_class())
-	print("   Body position: ", body.global_position)
-	print("   Kill zone position: ", global_position)
-	print("   Body groups: ", body.get_groups())
-	print("   Body collision layer: ", body.collision_layer)
-	print("   Body collision mask: ", body.collision_mask)
+	# This function is triggered whenever a body enters the Area2D.
 	
-	# Check if it's a CharacterBody2D
-	if body is CharacterBody2D:
-		print("   ✓ Is CharacterBody2D")
+	if body is CharacterBody2D and body.is_in_group("player"):
+		# If the player is found, it triggers the death sequence.
 		
-		# Check if it's in player group
-		if body.is_in_group("player"):
-			print("   ✓ Is in player group")
-			print("💀 PLAYER DEATH TRIGGERED!")
-			
-			var player_character = body as CharacterBody2D
-			if player_character.has_method("die"):
-				print("   ✓ Player has die() method - calling it")
-				player_character.die()
-			else:
-				print("   ❌ Player doesn't have die() method")
-			
-			Engine.time_scale = 0.5
-			death_timer.start()
-			print("   Death timer started")
-		else:
-			print("   ❌ Not in player group")
-			print("   Available groups: ", body.get_groups())
-	else:
-		print("   ❌ Not a CharacterBody2D, is: ", body.get_class())
+		var player_character = body as CharacterBody2D
+		if player_character.has_method("die"):
+			player_character.die()
+		
+		# Slows down the game's time scale to create a "bullet-time" death effect.
+		Engine.time_scale = 0.5
+		
+		# Starts the timer which will reload the scene after a delay.
+		death_timer.start()
 
 func _on_body_exited(body: Node2D) -> void:
-	print("🚪 BODY EXITED KILL ZONE: ", body.name)
+	# This signal is triggered when a body leaves the kill zone.
+	pass
 
 func _on_death_timer_timeout() -> void:
-	print("💀 Death timer timeout - reloading scene")
+	# It resets the game's time scale and reloads the current scene.
 	Engine.time_scale = 1.0
 	get_tree().reload_current_scene()
 
+# --- Utility Functions ---
 func set_width(width: float):
+	# A helper function to dynamically change the width of the kill zone.
 	if collision_shape and collision_shape.shape is RectangleShape2D:
 		var rect_shape = collision_shape.shape as RectangleShape2D
 		rect_shape.size.x = width
-		rect_shape.size.y = 64.0
-		print("📏 Kill zone size set to: ", rect_shape.size)
-	else:
-		print("❌ Cannot set width - no valid collision shape")
-
-# Debug function to manually test collision
-func _input(event):
-	if event.is_action_pressed("ui_accept"):  # Space key
-		print("🧪 MANUAL COLLISION TEST:")
-		check_initial_overlaps()
-
-# Continuous monitoring for debugging
-var debug_timer = 0.0
-func _process(delta):
-	debug_timer += delta
-	if debug_timer > 2.0:  # Every 2 seconds
-		debug_timer = 0.0
-		var player = get_tree().get_first_node_in_group("player")
-		if player:
-			var distance = global_position.distance_to(player.global_position)
-			if distance < 100:  # Only debug when player is nearby
-				print("🔍 NEARBY PLAYER DEBUG:")
-				print("   Kill zone: ", global_position)
-				print("   Player: ", player.global_position)
-				print("   Distance: ", distance)
-				print("   Overlapping bodies: ", get_overlapping_bodies().size())
+		rect_shape.size.y = 64.0 # Height is fixed

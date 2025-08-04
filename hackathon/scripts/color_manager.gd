@@ -207,7 +207,6 @@ func update_shader_parameters():
 # --- SHADER SETUP ---
 func setup_shader():
 	# Creates the full-screen shader overlay system.
-	# Create overlay layer (high priority to render on top)
 	canvas_layer = CanvasLayer.new()
 	canvas_layer.layer = 100  # Render above everything else
 	add_child(canvas_layer)
@@ -226,10 +225,7 @@ func setup_shader():
 
 # --- DEATH EFFECT SYSTEM ---
 func trigger_death_fade():
-	"""
-	FIXED: Triggers the death effect by immediately starting shrink animations 
-	for ALL active bleed events simultaneously.
-	"""
+	#FIXED: Triggers the death effect by immediately starting shrink animations for ALL active bleed events simultaneously.
 	print("Triggering death fade effect...")
 	is_death_mode = true
 	
@@ -260,16 +256,16 @@ func trigger_death_fade():
 
 # --- PROGRESS TRACKING FUNCTIONS ---
 func get_game_progress_percentage() -> float:
-	"""Returns current game progress as a percentage (0.0 to 100.0)."""
+	#Returns current game progress as a percentage (0.0 to 100.0).
 	return game_progress_percentage
 
 # --- DEBUG FUNCTIONS ---
 func get_current_max_radius() -> float:
-	"""Returns current maximum radius for debugging."""
+	#Returns current maximum radius for debugging.
 	return current_max_radius
 
 func get_progression_info() -> Dictionary:
-	"""Returns progression information for debugging."""
+	#Returns progression information for debugging.
 	return {
 		"game_progress_percentage": game_progress_percentage,
 		"current_max_radius": current_max_radius,
@@ -280,7 +276,7 @@ func get_progression_info() -> Dictionary:
 	}
 
 func clear_all_bleed_events():
-	"""Immediately removes all active bleed events."""
+	#Immediately removes all active bleed events.
 	for event in active_bleed_events:
 		event.event_finished = true
 	
@@ -288,6 +284,3 @@ func clear_all_bleed_events():
 	update_bleed_events()
 	
 	print("All bleed events cleared. Remaining events: ", active_bleed_events.size())
-
-# REMOVED: check_game_completion() function - no longer needed
-# Game completion is now handled entirely by MusicManager

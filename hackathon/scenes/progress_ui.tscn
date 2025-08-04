@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://br4u0m3wuhwga" path="res://scripts/progress_ui.gd" id="1_u5dlc"]
 
 [node name="ProgressUI" type="Control"]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0

@@ -1,5 +1,6 @@
 extends Control
 class_name ProgressUI
+# Was used for debbugging 
 
 # --- UI ELEMENTS ---
 @onready var progress_label: Label

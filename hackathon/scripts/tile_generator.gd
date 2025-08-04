@@ -55,9 +55,6 @@ var last_player_x: float = 0.0
 const UPDATE_THRESHOLD: float = 32.0
 
 func _ready():
-	print("TileGenerator _ready() called")
-	print("Ground level set to: ", GROUND_Y)
-	print("Ground offset for low tiles: ", GROUND_OFFSET)
 	
 	music_manager = get_tree().root.find_child("MusicManager", true, false)
 	player_node = get_tree().get_first_node_in_group("player")
@@ -79,33 +76,15 @@ func _ready():
 		print("WARNING: Kill zone scene not assigned in inspector!")
 	else:
 		print("Kill zone scene loaded: ", kill_zone_scene.resource_path)
-	
-	# Draw debug ground line
-	if show_debug_visualization:
-		draw_debug_ground_line()
-
-func draw_debug_ground_line():
-	var ground_line = Line2D.new()
-	ground_line.add_point(Vector2(-1000, GROUND_Y))
-	ground_line.add_point(Vector2(5000, GROUND_Y))
-	ground_line.default_color = Color.RED
-	ground_line.width = 3.0
-	ground_line.z_index = 100
-	get_tree().current_scene.add_child(ground_line)
-	debug_lines.append(ground_line)
-	
-	print("Debug ground line drawn at y=", GROUND_Y)
 
 func start_generation(start_delay: float):
-	"""Starts pre-calculating tile positions with a delay to sync with music."""
+	#Starts pre-calculating tile positions with a delay to sync with music.
 	generation_start_offset = start_delay
 	generation_active = true  # Enable generation
 	print("Tile generation will start with an offset of ", generation_start_offset, " seconds.")
 	call_deferred("pre_calculate_positions")
 
-func pre_calculate_positions():
-	print("Pre-calculating tile positions...")
-	
+func pre_calculate_positions():	
 	if not music_manager or music_manager.music_data.is_empty():
 		print("No music data available for generation")
 		return
@@ -339,32 +318,8 @@ func create_kill_zone_gap(from_pos: Vector2, to_pos: Vector2):
 		
 		print("✓ Created kill zone at: ", kill_zone.global_position, " with width: ", gap_width + 20.0)
 		print("   Collision setup - Layer: ", kill_zone.collision_layer, " | Mask: ", kill_zone.collision_mask)
-		
-		# DEBUG VISUALIZATION
-		if show_debug_visualization:
-			create_kill_zone_debug_visual(gap_center_x, kill_zone_y, gap_width + 20.0)
 	else:
 		print("✗ Gap too small for kill zone: ", gap_width)
-
-func create_kill_zone_debug_visual(center_x: float, center_y: float, width: float):
-	var debug_rect = ColorRect.new()
-	debug_rect.size = Vector2(width, 32)
-	debug_rect.position = Vector2(center_x - width/2, center_y - 16)
-	debug_rect.color = Color(1.0, 0.0, 0.0, 0.3)  # Semi-transparent red
-	debug_rect.z_index = 50
-	
-	get_tree().current_scene.add_child(debug_rect)
-	kill_zone_debug_rects.append(debug_rect)
-	
-	# Add a label showing kill zone info
-	var label = Label.new()
-	label.text = "KILL ZONE\nW:" + str(int(width))
-	label.position = Vector2(center_x - 30, center_y - 30)
-	label.add_theme_color_override("font_color", Color.RED)
-	label.z_index = 51
-	
-	get_tree().current_scene.add_child(label)
-	print("Created debug visualization for kill zone at x=", center_x)
 
 func cleanup_distant_tiles():
 	if not player_node:
@@ -404,9 +359,9 @@ func _on_tile_hit():
 	tiles_successfully_hit += 1
 	print("Tile hit! Total tiles hit: ", tiles_successfully_hit)
 
-# NEW: Handle music finished signal
+# Handle music finished signal
 func _on_music_finished():
-	"""Called when music finishes playing."""
+	#Called when music finishes playing
 	print("TileGenerator: Music finished - stopping tile generation")
 	generation_active = false
 
@@ -415,12 +370,12 @@ func get_tiles_successfully_hit() -> int:
 
 # --- PROGRESS TRACKING FUNCTIONS ---
 func get_game_progress_percentage() -> float:
-	"""Returns current game progress as a percentage based on music playback."""
+	#Returns current game progress as a percentage based on music playback.
 	if not music_manager:
 		return 0.0
 	
 	return music_manager.get_music_progress()
 
 func is_generation_active() -> bool:
-	"""Returns whether tile generation is currently active."""
+	#Returns whether tile generation is currently active.
 	return generation_active

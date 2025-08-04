@@ -27,24 +27,7 @@ func setup_game_systems():
 		printerr("MusicManager node not found in scene!")
 		return
 		
-	# REMOVED: music_finished_event connection - no longer needed since MusicManager handles scene change directly
 	print("Music manager found and ready.")
-	
-	# FIXED: Use the correct music file path that's already working
-	var music_path = "res://music/Nightcore - Takedown (Huntrix).mp3"
-	var music_resource = load(music_path)
-	
-	if music_resource:
-		music_manager.base_music_track = music_resource
-		print("Music track loaded successfully: ", music_path)
-	else:
-		print("ERROR: Could not load music from: ", music_path)
-		# Try to use the music that's already assigned in MusicManager
-		if music_manager.base_music_track:
-			print("Using pre-assigned music track in MusicManager")
-		else:
-			print("CRITICAL: No music available!")
-			return
 	
 	await get_tree().process_frame
 	
@@ -84,9 +67,6 @@ func setup_game_systems():
 		printerr("ColorManager node not found in scene!")
 		return
 	
-	# Setup Progress UI
-	setup_progress_ui()
-	
 	await get_tree().process_frame
 	print("All systems initialized, waiting for full setup...")
 	
@@ -98,39 +78,6 @@ func setup_game_systems():
 	print("Starting music system...")
 	if music_manager:
 		music_manager.start_music()
-	
-	# Optional: Print final scene structure for debugging
-	print_scene_structure()
-
-func setup_progress_ui():
-	# Create progress UI as a CanvasLayer for overlay
-	var ui_layer = CanvasLayer.new()
-	ui_layer.layer = 200 # Above everything else
-	ui_layer.name = "UILayer"
-	add_child(ui_layer)
-	
-	# Create the progress UI control
-	progress_ui = ProgressUI.new()
-	progress_ui.name = "ProgressUI"
-	ui_layer.add_child(progress_ui)
-	
-	print("Progress UI created and added to scene")
-
-# REMOVED: on_music_finished() function - no longer needed since MusicManager handles scene change directly
-	
-func print_scene_structure():
-	print("=== FINAL SCENE STRUCTURE ===")
-	print("Main scene children count: ", get_child_count())
-	
-	for child in get_children():
-		print("  - ", child.name, " (", child.get_class(), ")")
-		if child.name == "TileGenerator":
-			var tg = child as TileGenerator
-			if tg:
-				print("    Generated tiles: ", tg.generated_tiles.size())
-		
-		for grandchild in child.get_children():
-			print("    - ", grandchild.name, " (", grandchild.get_class(), ")")
 
 func _input(event):
 	if event.is_action_pressed("ui_accept"):
@@ -151,22 +98,3 @@ func _input(event):
 				print("Music time: ", audio_player.get_playback_position(), "/", audio_player.stream.get_length())
 				print("Music playing: ", audio_player.is_playing())
 		print("Main scene children: ", get_child_count())
-
-func _draw():
-	var grid_size = 50
-	var grid_color = Color.GRAY
-	grid_color.a = 0.3
-	
-	for x in range(-10, 20):
-		var line_x = x * grid_size
-		draw_line(Vector2(line_x, -300), Vector2(line_x, 100), grid_color, 1)
-	
-	for y in range(-6, 3):
-		var line_y = y * grid_size
-		draw_line(Vector2(-500, line_y), Vector2(1000, line_y), grid_color, 1)
-	
-	draw_circle(Vector2.ZERO, 10, Color.RED)
-	
-	if player_node:
-		var player_screen_pos = player_node.global_position
-		draw_circle(player_screen_pos, 15, Color.GREEN)
