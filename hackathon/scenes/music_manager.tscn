@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://do8f2p5ri1ll8"]
+
+[ext_resource type="Script" uid="uid://dgo0bwohf7ek8" path="res://scripts/music_manager.gd" id="1_tylfe"]
+[ext_resource type="AudioStream" uid="uid://cy6drcgtmet4t" path="res://music/Hackathon_Music.mp3" id="2_hetdf"]
+
+[node name="MusicManager" type="Node"]
+script = ExtResource("1_tylfe")
+base_music_track = ExtResource("2_hetdf")

@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://dtidwbhm46dej"]
+
+[ext_resource type="Script" uid="uid://c6hb06en0um4n" path="res://scripts/paused_button.gd" id="1_cneu2"]
+
+[node name="PausedButton" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cneu2")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 7
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -41.0
+offset_top = 11.0
+offset_right = -15.0
+offset_bottom = 42.0
+grow_horizontal = 0
+text = "||"
+
+[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_pause_pressed"]

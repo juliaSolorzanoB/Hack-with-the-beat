@@ -1,4 +1,10 @@
+Button
+CanvasLayer
+Control
 Node
+Label
+Panel
+VBoxContainer
 CollisionShape2D
 Timer
 Area2D
@@ -6,7 +12,3 @@ Sprite2D
 StaticBody2D
 Camera2D
 AnimatedSprite2D
-CharacterBody2D
-TileMap
-ParallaxLayer
-ParallaxBackground

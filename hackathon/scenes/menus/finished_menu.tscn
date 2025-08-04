@@ -1,0 +1,128 @@
+[gd_scene load_steps=10 format=3 uid="uid://jvd5pq061sby"]
+
+[ext_resource type="Script" uid="uid://bmwbntn2lgkq0" path="res://scripts/finished_menu.gd" id="1_ni5gh"]
+[ext_resource type="Texture2D" uid="uid://u74i2pu16ne" path="res://assets/home_background.png" id="2_ttb2d"]
+[ext_resource type="FontFile" uid="uid://bjk382vuyyqyd" path="res://assets/DePixelBreit.ttf" id="3_qcbqc"]
+[ext_resource type="FontFile" uid="uid://duujiy68jbcyw" path="res://assets/GrapeSoda.ttf" id="4_u2g4y"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rtw2f"]
+texture = ExtResource("2_ttb2d")
+modulate_color = Color(0.509286, 0.509286, 0.509286, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8ln24"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rtw2f"]
+bg_color = Color(0.895923, 0.728482, 0.672563, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oa1go"]
+bg_color = Color(0.895923, 0.728482, 0.672563, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jk1qb"]
+bg_color = Color(0.962169, 0.897111, 0.875533, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_size = 5
+
+[node name="FinishedMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ni5gh")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_rtw2f")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -191.0
+offset_top = 4.0
+offset_right = 191.0
+offset_bottom = 192.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0.627401, 0.39478, 0.316765, 1)
+theme_override_colors/font_hover_color = Color(0.627401, 0.39478, 0.316765, 1)
+theme_override_colors/font_color = Color(0.431342, 0.274473, 0.258447, 1)
+theme_override_colors/font_focus_color = Color(0.627401, 0.39478, 0.316765, 1)
+theme_override_colors/font_pressed_color = Color(0.627401, 0.39478, 0.316765, 1)
+theme_override_constants/h_separation = 8
+theme_override_fonts/font = ExtResource("3_qcbqc")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8ln24")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rtw2f")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_oa1go")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jk1qb")
+text = "Back to Menu"
+
+[node name="Button2" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0.627401, 0.39478, 0.316765, 1)
+theme_override_colors/font_hover_color = Color(0.627401, 0.39478, 0.316765, 1)
+theme_override_colors/font_color = Color(0.431342, 0.274473, 0.258447, 1)
+theme_override_colors/font_focus_color = Color(0.627401, 0.39478, 0.316765, 1)
+theme_override_colors/font_pressed_color = Color(0.627401, 0.39478, 0.316765, 1)
+theme_override_constants/h_separation = 8
+theme_override_fonts/font = ExtResource("3_qcbqc")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8ln24")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rtw2f")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_oa1go")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jk1qb")
+text = "Exit Game
+"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -389.0
+offset_top = -382.0
+offset_right = 391.0
+offset_bottom = 131.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.897387, 0.705495, 0.681689, 1)
+theme_override_colors/font_shadow_color = Color(0.0456952, 0.0456923, 0.0153691, 1)
+theme_override_fonts/font = ExtResource("4_u2g4y")
+theme_override_font_sizes/font_size = 80
+text = "YOU HAVE RESTORED THE WORLD!!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_replay_pressed"]
