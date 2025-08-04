@@ -1,4 +1,3 @@
-
 extends Node2D
 
 # References to game systems
@@ -27,15 +26,25 @@ func setup_game_systems():
 	if not music_manager:
 		printerr("MusicManager node not found in scene!")
 		return
+		
+	# REMOVED: music_finished_event connection - no longer needed since MusicManager handles scene change directly
+	print("Music manager found and ready.")
 	
-	var music_path = "res://music/Twinkle twinkle Little Star - Arima Kousei Ver [Synthesia].mp3"
+	# FIXED: Use the correct music file path that's already working
+	var music_path = "res://music/Nightcore - Takedown (Huntrix).mp3"
 	var music_resource = load(music_path)
 	
 	if music_resource:
 		music_manager.base_music_track = music_resource
-		print("Music track loaded successfully")
+		print("Music track loaded successfully: ", music_path)
 	else:
 		print("ERROR: Could not load music from: ", music_path)
+		# Try to use the music that's already assigned in MusicManager
+		if music_manager.base_music_track:
+			print("Using pre-assigned music track in MusicManager")
+		else:
+			print("CRITICAL: No music available!")
+			return
 	
 	await get_tree().process_frame
 	
@@ -96,7 +105,7 @@ func setup_game_systems():
 func setup_progress_ui():
 	# Create progress UI as a CanvasLayer for overlay
 	var ui_layer = CanvasLayer.new()
-	ui_layer.layer = 200  # Above everything else
+	ui_layer.layer = 200 # Above everything else
 	ui_layer.name = "UILayer"
 	add_child(ui_layer)
 	
@@ -107,6 +116,8 @@ func setup_progress_ui():
 	
 	print("Progress UI created and added to scene")
 
+# REMOVED: on_music_finished() function - no longer needed since MusicManager handles scene change directly
+	
 func print_scene_structure():
 	print("=== FINAL SCENE STRUCTURE ===")
 	print("Main scene children count: ", get_child_count())
@@ -134,6 +145,11 @@ func _input(event):
 		if color_manager:
 			var progress_info = color_manager.get_progression_info()
 			print("Color manager progress: ", progress_info)
+		if music_manager and music_manager.audio_players.size() > 0:
+			var audio_player = music_manager.audio_players[0]
+			if audio_player.stream:
+				print("Music time: ", audio_player.get_playback_position(), "/", audio_player.stream.get_length())
+				print("Music playing: ", audio_player.is_playing())
 		print("Main scene children: ", get_child_count())
 
 func _draw():

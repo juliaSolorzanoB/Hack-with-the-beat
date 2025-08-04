@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://do8f2p5ri1ll8"]
 
 [ext_resource type="Script" uid="uid://dgo0bwohf7ek8" path="res://scripts/music_manager.gd" id="1_tylfe"]
-[ext_resource type="AudioStream" uid="uid://bk5s3d88fqdlr" path="res://music/Nightcore - Takedown (Huntrix).mp3" id="2_hetdf"]
+[ext_resource type="AudioStream" uid="uid://cpkuyrvpqhucu" path="res://music/SHORT MUSIC  No Copyright Music  Royalty-free Music For Background 2023.mp3" id="2_hetdf"]
 
 [node name="MusicManager" type="Node"]
 script = ExtResource("1_tylfe")

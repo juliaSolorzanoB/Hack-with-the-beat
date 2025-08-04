@@ -9,11 +9,11 @@ extends CharacterBody2D
 # --- JUMP SYSTEM PARAMETERS ---
 # Two different jump types with different behaviors
 @export_group("Single Jump")
-@export var single_jump_velocity: float = -330.0        # Upward force for tap jumps
+@export var single_jump_velocity: float = -320.0        # Upward force for tap jumps
 @export var single_jump_extra_fall_force: float = 680.0 # Extra gravity while falling
 
 @export_group("Bunny Hop Jump")
-@export var bunny_hop_velocity: float = -350.0          # Upward force for held jumps
+@export var bunny_hop_velocity: float = -340.0          # Upward force for held jumps
 @export var bunny_hop_extra_fall_force: float = 370.0   # Less fall force for smoother hops
 @export var bunny_hop_lockout_duration: float = 0.2    # Cooldown between bunny hops
 

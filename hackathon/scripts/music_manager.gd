@@ -4,11 +4,13 @@ class_name MusicManager
 signal beat_detected(strength: float, frequency: float, time_stamp: float)
 signal music_layer_activated(layer_index: int)
 signal music_intensity_changed(intensity: float)
+signal music_finished_event # Signal when music actually finishes
 
 # --- MUSIC DATA ---
 var music_data: Array = []
 var current_music_index: int = 0
 var is_playing: bool = false
+var music_finished: bool = false # Track if music has finished
 
 # --- AUDIO LAYERS ---
 @export var base_music_track: AudioStream
@@ -28,7 +30,7 @@ const INTENSITY_HISTORY_SIZE: int = 10
 func _ready():
 	# Auto-load base track if not assigned
 	if not base_music_track:
-		base_music_track = load("res://music/Nightcore - Takedown (Huntrix).mp3")  # Update this path
+		base_music_track = load("res://music/SHORT MUSIC  No Copyright Music  Royalty-free Music For Background 2023.mp3")
 		if not base_music_track:
 			print("ERROR: Could not load base music track")
 	
@@ -55,7 +57,7 @@ func _ready():
 	load_music_data()
 
 func load_music_data():
-	var file_path = "res://music/3music_analysis_data.json"
+	var file_path = "res://music/4music_analysis_data.json"
 	var file = FileAccess.open(file_path, FileAccess.READ)
 	if file:
 		var json_string = file.get_as_text()
@@ -80,15 +82,33 @@ func start_music():
 	
 	print("Starting music with base track...")
 	is_playing = true
+	music_finished = false
+	
+	# Connect the built-in 'finished' signal of the audio player to our completion function
+	audio_players[0].finished.connect(check_music_completion)
+	
 	audio_players[0].play()
 	activate_music_layer(0)
 
 func _process(delta):
-	if not is_playing or music_data.is_empty() or audio_players.is_empty() or not audio_players[0].is_playing():
+	if not is_playing or music_data.is_empty() or audio_players.is_empty():
 		return
-		
-	process_music_events()
-	update_intensity_tracking()
+	
+	if audio_players[0].is_playing():
+		process_music_events()
+		update_intensity_tracking()
+
+# SIMPLIFIED: This function now only handles scene change
+func check_music_completion():
+	print("🎵 MUSIC COMPLETED NATURALLY! 🎵")
+	print("🎉 GAME FINISHED - Changing to finish menu! 🎉")
+	
+	is_playing = false
+	music_finished = true
+	music_finished_event.emit()
+	
+	# SIMPLIFIED: Just change to the finished menu scene - no tile/killzone deletion
+	get_tree().change_scene_to_file("res://scenes/menus/finished_menu.tscn")
 
 func process_music_events():
 	var current_playback_time = audio_players[0].get_playback_position()
@@ -143,7 +163,39 @@ func update_intensity_tracking():
 	music_intensity_changed.emit(avg_intensity)
 
 func fade_out_music():
+	print("Fading out music...")
 	is_playing = false
 	for audio_player in audio_players:
 		var tween = create_tween()
 		tween.tween_property(audio_player, "volume_db", -80.0, 3.0)
+
+# Get current music progress for UI
+func get_music_progress() -> float:
+	if audio_players.is_empty() or not audio_players[0].stream or not audio_players[0].is_playing():
+		return 0.0
+	
+	var current_time = audio_players[0].get_playback_position()
+	var total_duration = audio_players[0].stream.get_length()
+	
+	if total_duration > 0:
+		return (current_time / total_duration) * 100.0
+	
+	return 0.0
+
+# Get music time info for debugging
+func get_music_time_info() -> Dictionary:
+	if audio_players.is_empty() or not audio_players[0].stream:
+		return {"current": 0.0, "total": 0.0, "progress": 0.0, "playing": false, "finished": music_finished}
+	
+	var audio_player = audio_players[0]
+	var current_time = audio_player.get_playback_position()
+	var total_duration = audio_player.stream.get_length()
+	var progress = (current_time / total_duration * 100.0) if total_duration > 0 else 0.0
+	
+	return {
+		"current": current_time,
+		"total": total_duration,
+		"progress": progress,
+		"playing": audio_player.is_playing(),
+		"finished": music_finished
+	}

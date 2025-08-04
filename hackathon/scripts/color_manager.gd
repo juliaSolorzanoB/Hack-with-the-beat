@@ -15,7 +15,7 @@ var active_bleed_events: Array[ColorBleedEvent] = []
 
 # --- PROGRESSIVE RADIUS SYSTEM - UPDATED FOR 50-400 RANGE ---
 @export var min_bleed_radius: float = 50.0   # Starting radius
-@export var max_bleed_radius: float = 400.0  # Maximum radius when fully progressed (CHANGED from 200)
+@export var max_bleed_radius: float = 400.0  # Maximum radius when fully progressed
 var current_max_radius: float = 50.0         # Current maximum radius (grows over time)
 
 # --- PROGRESS TRACKING SYSTEM ---
@@ -54,27 +54,44 @@ func _physics_process(delta):
 	if not player_camera or not shader_material:
 		return
 
+	# FIXED: Update progression every frame to track music progress
+	update_progression()
+	
 	# Clean up finished events and update active ones
 	update_bleed_events()
 	
 	# Send current event data to the shader for rendering
 	update_shader_parameters()
 
-# --- PROGRESSIVE RADIUS SYSTEM - UPDATED WITH MUSIC-BASED PROGRESS ---
+# --- PROGRESSIVE RADIUS SYSTEM - FIXED PROGRESS TRACKING ---
 func update_progression():
 	"""Updates the maximum bleed radius based on music playback progress."""
 	# Get music manager to track actual music progress
 	var music_manager = get_tree().root.find_child("MusicManager", true, false)
-	if not music_manager or not music_manager.is_playing:
+	if not music_manager:
+		print("DEBUG: MusicManager not found")
+		return
+	
+	# Check if music is actually playing
+	if not music_manager.is_playing:
+		print("DEBUG: Music not playing")
 		return
 	
 	# Calculate progress based on music playback time vs total music duration
 	var current_time = 0.0
 	var total_duration = 0.0
 	
-	if music_manager.audio_players.size() > 0 and music_manager.audio_players[0].stream:
-		current_time = music_manager.audio_players[0].get_playback_position()
-		total_duration = music_manager.audio_players[0].stream.get_length()
+	if music_manager.audio_players.size() > 0 and music_manager.audio_players[0]:
+		var audio_player = music_manager.audio_players[0]
+		if audio_player.stream and audio_player.is_playing():
+			current_time = audio_player.get_playback_position()
+			total_duration = audio_player.stream.get_length()
+		else:
+			print("DEBUG: No stream or not playing - Stream: ", audio_player.stream != null, " Playing: ", audio_player.is_playing())
+			return
+	else:
+		print("DEBUG: No audio players available")
+		return
 	
 	if total_duration > 0:
 		# Calculate progress as percentage of music completion
@@ -88,7 +105,12 @@ func update_progression():
 		current_max_radius = min_bleed_radius + (progression * (max_bleed_radius - min_bleed_radius))
 		current_max_radius = clamp(current_max_radius, min_bleed_radius, max_bleed_radius)
 		
-		print("Music Progress: ", game_progress_percentage, "% | Current max radius: ", current_max_radius, " | Time: ", current_time, "/", total_duration)
+		# DEBUG: Print every 5% progress change
+		var progress_rounded = int(game_progress_percentage / 5) * 5
+		if progress_rounded > 0 and progress_rounded % 5 == 0:
+			print("Music Progress: ", game_progress_percentage, "% | Current max radius: ", current_max_radius, " | Time: ", current_time, "/", total_duration)
+	else:
+		print("DEBUG: Total duration is 0")
 
 # --- BLEED EVENT LIFECYCLE ---
 func create_new_bleed_event(platform_global_pos: Vector2):
@@ -103,7 +125,7 @@ func create_new_bleed_event(platform_global_pos: Vector2):
 		if event.position == platform_global_pos:
 			return
 
-	# Update progression before creating new event
+	# FIXED: Always update progression before creating new event
 	update_progression()
 
 	# Create new event object with current max radius
@@ -267,23 +289,5 @@ func clear_all_bleed_events():
 	
 	print("All bleed events cleared. Remaining events: ", active_bleed_events.size())
 
-func check_game_completion():
-	if game_progress_percentage >= 100.0:
-		print("Song reached 100%! Game finished.")
-		
-		# Stop all music
-		var music_manager = get_tree().root.find_child("MusicManager", true, false)
-		if music_manager:
-			music_manager.fade_out_music()
-		
-		# Find and remove all tiles and killzones
-		var tiles_to_delete = get_tree().get_nodes_in_group("tiles")
-		for tile in tiles_to_delete:
-			tile.queue_free()
-		
-		var killzones_to_delete = get_tree().get_nodes_in_group("killzones")
-		for killzone in killzones_to_delete:
-			killzone.queue_free()
-		
-		# Change to the "Game Finished" scene
-		get_tree().change_scene_to_file("res://scenes/finished_menu.tscn")
+# REMOVED: check_game_completion() function - no longer needed
+# Game completion is now handled entirely by MusicManager

@@ -45,7 +45,6 @@ var generation_start_offset: float = 7
 
 # --- MUSIC-BASED GENERATION CONTROL ---
 var generation_active: bool = false  # Controls whether we should generate new tiles
-var music_duration: float = 0.0      # Total length of the music track
 
 # --- KILL ZONE MANAGEMENT ---
 @export var kill_zone_scene: PackedScene
@@ -66,12 +65,8 @@ func _ready():
 	if music_manager:
 		music_manager.beat_detected.connect(_on_beat_detected)
 		music_manager.music_intensity_changed.connect(_on_intensity_changed)
+		music_manager.music_finished_event.connect(_on_music_finished)  # NEW: Connect to music finished signal
 		print("Connected to music manager signals")
-		
-		# Get music duration for progress tracking
-		if music_manager.audio_players.size() > 0 and music_manager.audio_players[0].stream:
-			music_duration = music_manager.audio_players[0].stream.get_length()
-			print("Music duration: ", music_duration, " seconds")
 	else:
 		print("WARNING: Music manager not found!")
 	
@@ -182,36 +177,14 @@ func _process(delta):
 	if not player_node:
 		return
 	
-	# Check if music has ended and stop generation
-	check_music_status()
+	# FIXED: Only update if generation is still active
+	if not generation_active:
+		return
 	
 	if abs(player_node.global_position.x - last_player_x) > UPDATE_THRESHOLD:
 		update_tile_generation()
 		cleanup_distant_tiles()
 		last_player_x = player_node.global_position.x
-
-func check_music_status():
-	"""Checks if music has ended and stops tile generation accordingly."""
-	if not music_manager or not generation_active:
-		return
-	
-	# Check if music is still playing
-	if music_manager.audio_players.size() > 0:
-		var audio_player = music_manager.audio_players[0]
-		if audio_player.stream:
-			var current_time = audio_player.get_playback_position()
-			var total_duration = audio_player.stream.get_length()
-			
-			# Stop generation when music ends OR when music stops playing
-			if not audio_player.is_playing() or current_time >= total_duration - 0.1:
-				generation_active = false
-				print("Music ended - stopping tile generation and cleaning up future tiles")
-				# Clean up tiles that are beyond the music duration
-				cleanup_post_music_tiles()
-		else:
-			# No stream loaded
-			generation_active = false
-			print("No music stream - disabling tile generation")
 
 func update_tile_generation():
 	if not player_node or tile_positions.is_empty() or not generation_active:
@@ -305,7 +278,6 @@ func frequency_to_height_level(frequency: float) -> int:
 
 func height_level_to_world_y(height_level: int) -> float:
 	var calculated_y = GROUND_Y - (height_level * TILE_HEIGHT)
-	# Keep original logic - no automatic offset here
 	return calculated_y
 
 func world_y_to_height_level(world_y: float) -> int:
@@ -432,55 +404,23 @@ func _on_tile_hit():
 	tiles_successfully_hit += 1
 	print("Tile hit! Total tiles hit: ", tiles_successfully_hit)
 
+# NEW: Handle music finished signal
+func _on_music_finished():
+	"""Called when music finishes playing."""
+	print("TileGenerator: Music finished - stopping tile generation")
+	generation_active = false
+
 func get_tiles_successfully_hit() -> int:
 	return tiles_successfully_hit
 
 # --- PROGRESS TRACKING FUNCTIONS ---
 func get_game_progress_percentage() -> float:
 	"""Returns current game progress as a percentage based on music playback."""
-	if not music_manager or not music_manager.audio_players.size() > 0:
+	if not music_manager:
 		return 0.0
 	
-	var audio_player = music_manager.audio_players[0]
-	if not audio_player.stream or not audio_player.is_playing():
-		return 0.0
-	
-	var current_time = audio_player.get_playback_position()
-	var total_duration = audio_player.stream.get_length()
-	
-	if total_duration > 0:
-		return (current_time / total_duration) * 100.0
-	
-	return 0.0
+	return music_manager.get_music_progress()
 
-func cleanup_post_music_tiles():
-	"""Removes tiles that would appear after the music has ended."""
-	if not music_manager or music_manager.audio_players.size() == 0:
-		return
-	
-	var audio_player = music_manager.audio_players[0]
-	if not audio_player.stream:
-		return
-	
-	var total_duration = audio_player.stream.get_length()
-	var tiles_to_remove = []
-	
-	# Calculate which tiles should be removed based on music timing
-	# Estimate: each tile roughly represents a music event
-	var music_events_count = music_manager.music_data.size()
-	var max_valid_tiles = int((total_duration / (total_duration + generation_start_offset)) * tile_positions.size())
-	
-	# Remove tiles beyond the music duration
-	for tile in generated_tiles:
-		var tile_index = get_tile_index(tile)
-		if tile_index > max_valid_tiles:
-			tiles_to_remove.append(tile)
-	
-	for tile in tiles_to_remove:
-		generated_tiles.erase(tile)
-		tile.queue_free()
-		print("Removed post-music tile at index: ", get_tile_index(tile))
-	
 func is_generation_active() -> bool:
 	"""Returns whether tile generation is currently active."""
 	return generation_active

@@ -83,7 +83,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_8ln24")
 theme_override_styles/hover = SubResource("StyleBoxFlat_rtw2f")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_oa1go")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jk1qb")
-text = "Restart Game"
+text = "Back to Menu"
 
 [node name="Button2" type="Button" parent="VBoxContainer"]
 layout_mode = 2
